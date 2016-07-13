@@ -8,6 +8,6 @@ FileUtils
 BeanUtils
 PropertyUtils
 SerializationUtils
-
+NumberUtils
 
 
