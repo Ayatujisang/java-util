@@ -12,10 +12,13 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.net.URL;
@@ -192,6 +195,76 @@ public class HttpClientUtil {
 			logger.error(ex.getMessage(), ex);
 		}
 		return null;
+	}
+
+	/**
+	 * 如果中文乱码 需要再进行转码
+	 * <p/>
+	 * resultStr = new String(resultStr.getBytes("ISO-8859-1"), "utf-8");
+	 */
+	public static String postXml2(String url, String data) {
+		HttpClient client = new DefaultHttpClient();
+		// 设置超时时间
+		client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
+		client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10000);
+
+		String responseBody = null;
+		try {
+			HttpPost httpPost = new HttpPost(url);
+
+			httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+			httpPost.setHeader(HTTP.CONTENT_ENCODING, "utf-8");
+
+			StringEntity payload = new StringEntity(data, "UTF-8");
+			httpPost.setEntity(payload);
+
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			responseBody = client.execute(httpPost, responseHandler);
+		} catch (ClientProtocolException e) {
+			logger.error(e.getMessage(), e);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		} finally {
+			client.getConnectionManager().shutdown();
+		}
+		return responseBody;
+	}
+
+	/**
+	 * 可以处理中文乱码，
+	 */
+	public static String postXml(String url, String data) {
+		StringBuilder sb = new StringBuilder();
+		HttpPost httpPost = new HttpPost(url);
+		HttpEntity entity = null;
+
+		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+		try {
+
+			HttpClient client = new DefaultHttpClient();
+			StringEntity payload = new StringEntity(data, "UTF-8");
+			httpPost.setEntity(payload);
+			HttpResponse response = client.execute(httpPost);
+			entity = response.getEntity();
+			String text;
+			if (entity != null) {
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
+				while ((text = bufferedReader.readLine()) != null) {
+					sb.append(text);
+				}
+
+			}
+		} catch (Exception e) {
+			logger.error("与[" + url + "]通信过程中发生异常,堆栈信息如下", e.getCause());
+		} finally {
+			try {
+				EntityUtils.consume(entity);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				logger.error("net io exception");
+			}
+		}
+		return sb.toString();
 	}
 
 }
