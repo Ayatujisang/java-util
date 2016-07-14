@@ -6,6 +6,9 @@ import net.sf.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * web工程使用
+ */
 public class JsonUtil {
 
     public static Map<Integer, String> code2msgMap = new HashMap<Integer, String>();

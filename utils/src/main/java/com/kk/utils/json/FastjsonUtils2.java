@@ -9,14 +9,12 @@ import java.util.Iterator;
 
 
 /**
- * FastjsonUtils
- *
- * @author xiaochen.sun
- * @since 2014-08-19 09:45
+ * net.sf.json 改造成 FastJson
+ * net.sf.json.toString() 效率太低，转成  fastjson.toString()
  */
-public class FastjsonUtils {
+public class FastjsonUtils2 {
 
-    public static String json2String(JSONObject json){
+    public static String json2String(JSONObject json) {
         com.alibaba.fastjson.JSONObject fastJson = json2fastJson(json);
         return fastJson.toString();
     }
@@ -26,7 +24,7 @@ public class FastjsonUtils {
         Iterator keys = json.keys();
         com.alibaba.fastjson.JSONObject fastJson = new com.alibaba.fastjson.JSONObject();
         while (keys.hasNext()) {
-            String key = (String)keys.next();
+            String key = (String) keys.next();
             Object o = json.opt(key);
             fastJson.put(key, object2fastJsonObject(o));
         }
@@ -50,7 +48,7 @@ public class FastjsonUtils {
             Iterator keys = json.keys();
             com.alibaba.fastjson.JSONObject fastJson = new com.alibaba.fastjson.JSONObject();
             while (keys.hasNext()) {
-                String key = (String)keys.next();
+                String key = (String) keys.next();
                 Object o = json.opt(key);
                 fastJson.put(key, object2fastJsonObject(o));
             }
