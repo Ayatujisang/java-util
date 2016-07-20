@@ -12,7 +12,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-public class JodaTimeUtil {
+public class JodaTimeTest {
 
     public static void main(String[] args) {
         {
