@@ -1,10 +1,10 @@
 
-1.使用相对路径，如：
+1.使用相对路径，如：（推荐）
 InputStream in = MessageService.class.getResourceAsStream("statue.txt");
 order_status.txt 和   WeixinMessageService在一个目录下。
 
 
-2.使用不同的classloader，如   Resources类
+2.使用不同的classloader，如   Resources类（推荐）
 InputStream in = Resources.getResourceAsStream(url);
 
 此外还有 getUrlAsStream等方法。
@@ -37,5 +37,6 @@ InputStream in = RU.class.getResourceAsStream("/1.txt");
 RU类在jar包中，1.txt默认从当前工程中找，然后再到对应的jar包中找。
 不能在当前工程 使用此写法找jar包中的文件资源。
 
+4.使用 spring的PathMatchingResourcePatternResolver， 支持通配符（推荐）
 
 
