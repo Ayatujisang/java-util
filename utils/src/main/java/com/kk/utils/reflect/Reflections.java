@@ -3,6 +3,9 @@ package com.kk.utils.reflect;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,11 +18,12 @@ import java.lang.reflect.Type;
  * 反射工具类.
  * <p/>
  * 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
- *
- *
- * 推荐使用 BeanUtils（commons-beanutils）
- *
+ * <p/>
+ * <p/>
+ * 推荐使用 BeanUtils，PropertyUtils（commons-beanutils）
+ * <p/>
  * 推荐使用   BeanWrapper beanWrapper = new BeanWrapperImpl(bean) （spring-beans）
+ *
  * @author calvin
  */
 public class Reflections {
@@ -303,5 +307,68 @@ public class Reflections {
             return (RuntimeException) e;
         }
         return new RuntimeException("Unexpected Checked Exception.", e);
+    }
+
+    // java 内省方法，  代替get，set
+
+    /**
+     * 　Introspector类:
+     * 　　将JavaBean中的属性封装起来进行操作。在程序把一个类当做JavaBean来看，
+     * 就是调用Introspector.getBeanInfo()方法，得到的BeanInfo对象封装了把这个类当做JavaBean看的结果信息，即属性的信息。
+     * 　　getPropertyDescriptors()，获得属性的描述，可以采用遍历BeanInfo的方法，来查找、设置类的属性。
+     */
+    public static void setPropertyByIntrospector(Object object, String prop, String value) throws Exception {
+        BeanInfo beanInfo = Introspector.getBeanInfo(object.getClass());
+        // 所有的 内省方法
+        PropertyDescriptor[] proDescrtptors = beanInfo.getPropertyDescriptors();
+        if (proDescrtptors != null && proDescrtptors.length > 0) {
+            for (PropertyDescriptor propDesc : proDescrtptors) {
+                if (propDesc.getName().equals(prop)) {
+                    Method method = propDesc.getWriteMethod();
+                    method.invoke(object, value);
+                    break;
+                }
+            }
+        }
+    }
+
+    //如果prop找不到则返回null
+    public static Object getPropertyByIntrospector(Object object, String prop) throws Exception {
+        BeanInfo beanInfo = Introspector.getBeanInfo(object.getClass());
+        PropertyDescriptor[] proDescrtptors = beanInfo.getPropertyDescriptors();
+        if (proDescrtptors != null && proDescrtptors.length > 0) {
+            for (PropertyDescriptor propDesc : proDescrtptors) {
+                if (propDesc.getName().equals(prop)) {
+                    Method method = propDesc.getReadMethod();
+                    return method.invoke(object);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * PropertyDescriptor类:
+     * 　　PropertyDescriptor类表示JavaBean类通过存储器导出一个属性。主要方法：
+     * 　　1. getPropertyType()，获得属性的Class对象;
+     * 　　2. getReadMethod()，获得用于读取属性值的方法；getWriteMethod()，获得用于写入属性值的方法;
+     * 　　3. hashCode()，获取对象的哈希值;
+     * 　　4. setReadMethod(Method readMethod)，设置用于读取属性值的方法;
+     * 　　5. setWriteMethod(Method writeMethod)，设置用于写入属性值的方法。
+     * 　　6. getName(Method writeMethod)，属性名称
+     */
+    public static void setProperty(Object object, String prop, String value) throws Exception {
+        //生成一个 内省方法
+        PropertyDescriptor propDesc = new PropertyDescriptor(prop, object.getClass());
+        Method method = propDesc.getWriteMethod();
+        method.invoke(object, value);
+    }
+
+    // 如果prop找不到则抛出异常
+    public static Object getProperty(Object object, String prop) throws Exception {
+        PropertyDescriptor proDescriptor = new PropertyDescriptor(prop, object.getClass());
+        Method method = proDescriptor.getReadMethod();
+        Object value = method.invoke(object);
+        return value;
     }
 }
