@@ -213,10 +213,8 @@ public class GenericUtils {
 
                 map.put(field.getName(), field.get(null));
             } catch (SecurityException e) {
-                e.printStackTrace();
             } catch (IllegalAccessException e) {
                 // Do nothing
-                e.printStackTrace();
             }
         }
     }
