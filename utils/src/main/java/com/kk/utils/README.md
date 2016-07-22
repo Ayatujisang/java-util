@@ -7,6 +7,7 @@ RandomStringUtils
 FileUtils
 BeanUtils
 PropertyUtils
+ClassUtils
 SerializationUtils
 NumberUtils
 MethodUtils
