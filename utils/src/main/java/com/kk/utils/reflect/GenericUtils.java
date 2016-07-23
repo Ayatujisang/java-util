@@ -32,6 +32,7 @@ public class GenericUtils {
      * 从参数, 返回值, 基类的: Generic 类型信息获取传入的实际类信息。 获取list，map里面的泛型
      * <p/>
      * 调用方式：getActualClass(method.getGenericReturnType())
+     * 但是List<Map> 无法获取map值，
      *
      * @param genericType - Generic 类型信息
      * @return 实际类信息
