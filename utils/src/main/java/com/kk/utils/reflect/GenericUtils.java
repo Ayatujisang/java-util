@@ -86,6 +86,11 @@ public class GenericUtils {
     /**
      * 求declaringClass类中声明的泛型类型变量在invocationClass中真正的值
      *
+     * 返回类型List<E>、Map<K,V>的类型， list，Map
+     * <p/>
+     * 调用样例
+     * method.getDeclaringClass(), method.getGenericReturnType()
+     *
      * @param invocationClass 编程时使用的类
      * @param declaringClass  声明类型变量typeVarName的类
      * @param typeVarName     泛型变量名
