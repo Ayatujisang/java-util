@@ -368,7 +368,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 计算两个日期之间相差的天数
+	 * 计算两个日期之间相差的天数， bdate-smdate
 	 *
 	 * @param smdate 较小的时间
 	 * @param bdate  较大的时间
