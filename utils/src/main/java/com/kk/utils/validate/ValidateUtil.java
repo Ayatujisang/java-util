@@ -1,4 +1,4 @@
-package com.kk.utils;
+package com.kk.utils.validate;
 
 import com.kk.utils.encode.SHA1Util;
 import org.apache.commons.lang.StringUtils;
