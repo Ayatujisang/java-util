@@ -18,8 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class XmlUtil {
-    private static final Log logger = LogFactory.getLog(XmlUtil.class);
+/**
+ * 依赖dom4j， json，input，xml，string，map互相转化， 只处理第一级别
+ */
+public class XmlMapJsonUtil {
+    private static final Log logger = LogFactory.getLog(XmlMapJsonUtil.class);
 
     public static Map<String, Object> parseXml(InputStream inputStream) {
         try {
