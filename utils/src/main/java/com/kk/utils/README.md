@@ -6,6 +6,7 @@ StringUtils
 RandomStringUtils
 FileUtils
 BeanUtils
+ObjectUtils
 PropertyUtils
 ClassUtils
 SerializationUtils
