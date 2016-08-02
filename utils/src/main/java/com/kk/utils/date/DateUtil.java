@@ -20,7 +20,10 @@ public class DateUtil {
 	public static final String formatDefaultHour = "HH:mm:ss";
 	
 	public static final String formatDefaultDayAndHour = "MM-dd";
-	
+
+	// 上午，下午 使用 a
+	// AM,PM 也使用a，但是需要指定Locale，如：new SimpleDateFormat("yyyy-MM-dd a", Locale.ENGLISH)
+
 	private DateUtil() {}
 
 	/**
