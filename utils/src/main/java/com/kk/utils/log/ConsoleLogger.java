@@ -20,6 +20,11 @@ public class ConsoleLogger {
         System.out.println(sb.toString());
     }
 
+    public void error(Object message) {
+        StringBuilder sb = log("ERROR", message);
+        System.out.println(sb.toString());
+    }
+
     public void error(Object message, Throwable t) {
 
         StringBuilder sb = log("ERROR", message);
