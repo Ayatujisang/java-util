@@ -70,9 +70,9 @@ public class HeapMax {
         }
 
         {
-            PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            PriorityQueue<Integer> heap = new PriorityQueue<Integer>(100, new Comparator<Integer>() {
                 public int compare(Integer a0, Integer a1) {
-                   return a1-a0;
+                    return a1 - a0;
                 }
             });
             heap.offer(24);

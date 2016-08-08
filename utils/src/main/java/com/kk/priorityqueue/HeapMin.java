@@ -64,7 +64,7 @@ public class HeapMin {
             }
         }
         {
-            PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            PriorityQueue<Integer> heap = new PriorityQueue<Integer>(10, new Comparator<Integer>() {
                 public int compare(Integer a0, Integer a1) {
                     return a0 - a1;
                 }
