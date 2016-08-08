@@ -202,7 +202,7 @@ public class HttpClientUtil {
 	 * <p/>
 	 * resultStr = new String(resultStr.getBytes("ISO-8859-1"), "utf-8");
 	 */
-	public static String postXml2(String url, String data) {
+	public static String postData2(String url, String data) {
 		HttpClient client = new DefaultHttpClient();
 		// 设置超时时间
 		client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
@@ -233,7 +233,7 @@ public class HttpClientUtil {
 	/**
 	 * 可以处理中文乱码，
 	 */
-	public static String postXml(String url, String data) {
+	public static String postData(String url, String data) {
 		StringBuilder sb = new StringBuilder();
 		HttpPost httpPost = new HttpPost(url);
 		HttpEntity entity = null;
