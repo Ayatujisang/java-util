@@ -45,6 +45,7 @@ public abstract class PriorityQueue<T> {
     // v1-v2>=0 最大堆， v2-v1>=0 最小堆
     protected abstract boolean lessThan(T var1, T var2);
 
+    // 堆元素 初始的默认值
     protected T getSentinelObject() {
         return null;
     }
