@@ -1,7 +1,7 @@
 
-java自带的优先级队列
+#### java自带的优先级队列
 
-最大、小堆：java.util.PriorityQueue
+##### 最大、小堆：java.util.PriorityQueue
 ```
 PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new Comparator<Integer>() {
     public int compare(Integer a0, Integer a1) {
@@ -14,3 +14,5 @@ PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new Comparator<Integer>
     }
 });
 ```
+
+#### PriorityQueue 自己实现的最大、小堆
