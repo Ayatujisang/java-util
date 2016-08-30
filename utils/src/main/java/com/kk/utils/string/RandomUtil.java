@@ -1,8 +1,13 @@
 package com.kk.utils.string;
 
+import org.apache.commons.lang.RandomStringUtils;
+
 import java.util.List;
 import java.util.Random;
 
+/**
+ * 参考：RandomStringUtils
+ */
 public class RandomUtil {
 
 	private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6',
@@ -118,6 +123,15 @@ public class RandomUtil {
 	public static <K> K random(List<K> list) {
 		Random random = new Random();
 		return list.get(random.nextInt(list.size()));
+	}
+
+	public static void main(String[] args) {
+		System.out.println(nextDIGITS(10));
+		System.out.println(RandomStringUtils.randomNumeric(10)); // 数字
+
+		System.out.println(RandomStringUtils.randomAlphabetic(10)); // 大小写
+
+		System.out.println(RandomStringUtils.randomAlphanumeric(10)); // 大小写和数字
 	}
 
 }
