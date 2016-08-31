@@ -21,6 +21,9 @@ import java.lang.reflect.Type;
  * <p/>
  * <p/>
  * 推荐使用 BeanUtils，PropertyUtils（commons-beanutils）
+ *
+ * FieldUtils.getField(model.getClass(), "fieldName", true)，getField 会找父类field，getDeclaredField不会找父类field。
+ *
  * <p/>
  * 推荐使用   BeanWrapper beanWrapper = new BeanWrapperImpl(bean) （spring-beans）
  *
