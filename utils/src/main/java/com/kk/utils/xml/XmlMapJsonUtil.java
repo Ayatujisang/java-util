@@ -24,9 +24,9 @@ import java.util.Map;
 public class XmlMapJsonUtil {
     private static final Log logger = LogFactory.getLog(XmlMapJsonUtil.class);
 
-    public static Map<String, Object> parseXml(InputStream inputStream) {
+    public static Map<String, String> parseXml(InputStream inputStream) {
         try {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, String> map = new HashMap<String, String>();
             SAXReader reader = new SAXReader();
             Document document = reader.read(inputStream);
             Element root = document.getRootElement();
@@ -90,9 +90,9 @@ public class XmlMapJsonUtil {
         }
     }
 
-    public static Map<String, Object> parseXml(String xml) {
+    public static Map<String, String> parseXml(String xml) {
         try {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, String> map = new HashMap<String, String>();
             SAXReader builder = new SAXReader();
             Document document = builder.read(new StringReader(xml));
             Element root = document.getRootElement();
@@ -109,12 +109,12 @@ public class XmlMapJsonUtil {
         }
     }
 
-    public static String toXml(Map<String, Object> data) {
+    public static String toXml(Map<String, String> data) {
         Document document = DocumentHelper.createDocument();
         Element nodeElement = document.addElement("xml");
         for (String key : data.keySet()) {
             Element keyElement = nodeElement.addElement(key);
-            keyElement.setText(String.valueOf(data.get(key)));
+            keyElement.setText(data.get(key));
         }
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
