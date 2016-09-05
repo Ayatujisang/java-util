@@ -6,6 +6,7 @@ import org.apache.commons.lang.reflect.FieldUtils;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 public class FieldTest {
     ConsoleLogger logger = new ConsoleLogger();
@@ -23,12 +24,16 @@ public class FieldTest {
 //            Reflections.setFieldValue(user, "id", "1"); // error ,类型不匹配
 
             FieldUtils.writeField(user, "id", 1, true);// yes
+            FieldUtils.writeField(user, "bitth", new Date(), true);// yes
+            FieldUtils.writeField(user, "height", 1, true);// yes
 //            FieldUtils.writeField(user, "id", "1", true);// error,类型不匹配
 
             Reflections.setProperty(user, "id", 1);// yes
+            Reflections.setProperty(user, "bitth", new Date());// yes
+            Reflections.setProperty(user, "height",1); // yes
 //            Reflections.setProperty(user, "id", "1");// error,类型不匹配
 
-            Reflections.setPropertyByIntrospector(user,"id",1);
+            Reflections.setPropertyByIntrospector(user, "id", 1);
 
             logger.info(field.get(user));
         }
