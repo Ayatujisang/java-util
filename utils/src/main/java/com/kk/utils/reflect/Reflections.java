@@ -320,7 +320,7 @@ public class Reflections {
      * 就是调用Introspector.getBeanInfo()方法，得到的BeanInfo对象封装了把这个类当做JavaBean看的结果信息，即属性的信息。
      * 　　getPropertyDescriptors()，获得属性的描述，可以采用遍历BeanInfo的方法，来查找、设置类的属性。
      */
-    public static void setPropertyByIntrospector(Object object, String prop, String value) throws Exception {
+    public static void setPropertyByIntrospector(Object object, String prop, Object value) throws Exception {
         BeanInfo beanInfo = Introspector.getBeanInfo(object.getClass());
         // 所有的 内省方法
         PropertyDescriptor[] proDescrtptors = beanInfo.getPropertyDescriptors();
@@ -360,7 +360,7 @@ public class Reflections {
      * 　　5. setWriteMethod(Method writeMethod)，设置用于写入属性值的方法。
      * 　　6. getName(Method writeMethod)，属性名称
      */
-    public static void setProperty(Object object, String prop, String value) throws Exception {
+    public static void setProperty(Object object, String prop, Object value) throws Exception {
         //生成一个 内省方法
         PropertyDescriptor propDesc = new PropertyDescriptor(prop, object.getClass());
         Method method = propDesc.getWriteMethod();
