@@ -1,6 +1,7 @@
 package com.kk.reflect.test;
 
 import com.kk.utils.log.ConsoleLogger;
+import com.kk.utils.reflect.Model2StringUtil;
 import com.kk.utils.reflect.Reflections;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.junit.Test;
@@ -35,7 +36,13 @@ public class FieldTest {
 
             Reflections.setPropertyByIntrospector(user, "id", 1);
 
+            Reflections.setFieldValueAutoDetectType(user,"id",1);
+            Reflections.setFieldValueAutoDetectType(user,"id","1");
+            Reflections.setFieldValueAutoDetectType(user,"name","2");
+            Reflections.setFieldValueAutoDetectType(user,"name",3);
+
             logger.info(field.get(user));
+            logger.info(Model2StringUtil.transModel2String(user));
         }
     }
 }

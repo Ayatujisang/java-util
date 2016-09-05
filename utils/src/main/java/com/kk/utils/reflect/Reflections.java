@@ -1,5 +1,6 @@
 package com.kk.utils.reflect;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,6 +49,45 @@ public class Reflections {
         return new StringBuilder(strLen)
                 .append(Character.toTitleCase(str.charAt(0)))
                 .append(str.substring(1)).toString();
+    }
+
+    //  自动识别value和field类型
+    public static void setFieldValueAutoDetectType(Object obj, String fieldName, Object value) {
+        Field field = getAccessibleField(obj, fieldName);
+        Class<?> typeClass = field.getType();
+        if (String.class.isAssignableFrom(typeClass)) {
+            setFieldValue(obj, fieldName, value.toString());
+        } else if (Long.class.isAssignableFrom(typeClass) || long.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Long.valueOf(value.toString()));
+            }
+        } else if (Integer.class.isAssignableFrom(typeClass) || int.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Integer.valueOf(value.toString()));
+            }
+        } else if (Boolean.class.isAssignableFrom(typeClass) || boolean.class.isAssignableFrom(typeClass)) {
+            if (value != null) {
+                setFieldValue(obj, fieldName, Boolean.valueOf(value.toString()));
+            }
+        } else if (Double.class.isAssignableFrom(typeClass) || double.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Double.valueOf(value.toString()));
+            }
+        } else if (Float.class.isAssignableFrom(typeClass) || float.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Float.valueOf(value.toString()));
+            }
+        } else if (Short.class.isAssignableFrom(typeClass) || short.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Short.valueOf(value.toString()));
+            }
+        } else if (Byte.class.isAssignableFrom(typeClass) || byte.class.isAssignableFrom(typeClass)) {
+            if (StringUtils.isNumeric(value.toString())) {
+                setFieldValue(obj, fieldName, Byte.valueOf(value.toString()));
+            }
+        } else {
+            setFieldValue(obj, fieldName, value);
+        }
     }
 
     /**
