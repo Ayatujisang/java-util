@@ -27,6 +27,8 @@ import java.lang.reflect.Type;
  * <p/>
  * 推荐使用   BeanWrapper beanWrapper = new BeanWrapperImpl(bean) （spring-beans）
  *
+ * Reflections,FieldUtils 设置fieldValue时候，value类型需要和field类型一致，否则抛出异常
+ * BeanWrapper 可以自动识别类型。
  * @author calvin
  */
 public class Reflections {
