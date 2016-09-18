@@ -33,6 +33,14 @@ public class SfJsonUtil {
         return JSONObject.fromObject(bean);
     }
 
+    /**
+     *   JsonConfig jsonConfig = new JsonConfig();
+         jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+         JSONObject json = new JSONObject();
+         json.putAll(map, jsonConfig);
+     * @param bean
+     * @return
+     */
     // 普通bean,map，  date:yyyy-MM-dd HH:mm:ss
     public static JSONObject toJsonObjectWithDateFormat(Object bean) {
         if (bean == null) {
