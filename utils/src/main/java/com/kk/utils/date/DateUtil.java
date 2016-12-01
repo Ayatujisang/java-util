@@ -5,6 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ *
+ common-lang.jar中 日期格式化
+ import org.apache.commons.lang.time.DateFormatUtils
+
+ String time = DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()); // yyyy-MM-dd
+
+ FastDateFormat ISO_DATETIME_FORMAT = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
+ */
 public class DateUtil {
 
 	public static final String formatDefaultTimestamp = "yyyy-MM-dd HH:mm:ss.SSS";
