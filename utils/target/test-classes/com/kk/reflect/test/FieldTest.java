@@ -20,19 +20,19 @@ public class FieldTest {
             logger.info(field);
 
             field.set(user, 1);// yes
-//            field.set(user, "1"); // error£¬ÀàĞÍ²»Æ¥Åä
+//            field.set(user, "1"); // errorï¼Œç±»å‹ä¸åŒ¹é…
             Reflections.setFieldValue(user, "id", 1); // yes
-//            Reflections.setFieldValue(user, "id", "1"); // error ,ÀàĞÍ²»Æ¥Åä
+//            Reflections.setFieldValue(user, "id", "1"); // error ,ç±»å‹ä¸åŒ¹é…
 
             FieldUtils.writeField(user, "id", 1, true);// yes
             FieldUtils.writeField(user, "bitth", new Date(), true);// yes
             FieldUtils.writeField(user, "height", 1, true);// yes
-//            FieldUtils.writeField(user, "id", "1", true);// error,ÀàĞÍ²»Æ¥Åä
+//            FieldUtils.writeField(user, "id", "1", true);// error,ç±»å‹ä¸åŒ¹é…
 
             Reflections.setProperty(user, "id", 1);// yes
             Reflections.setProperty(user, "bitth", new Date());// yes
             Reflections.setProperty(user, "height",1); // yes
-//            Reflections.setProperty(user, "id", "1");// error,ÀàĞÍ²»Æ¥Åä
+//            Reflections.setProperty(user, "id", "1");// error,ç±»å‹ä¸åŒ¹é…
 
             Reflections.setPropertyByIntrospector(user, "id", 1);
 
