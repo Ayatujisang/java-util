@@ -13,6 +13,10 @@ import java.util.Date;
  String time = DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()); // yyyy-MM-dd
 
  FastDateFormat ISO_DATETIME_FORMAT = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
+
+ Date now = DateUtils.truncate(new Date(), Calendar.DATE); // 忽略 小时以后数据
+ Date start = DateUtils.addDays(now, -15); // 日期操作
+
  */
 public class DateUtil {
 
