@@ -52,7 +52,7 @@ public class ConsoleLogger {
 
         sb.append(" - ");
 
-        sb.append(message.toString());
+        sb.append(message);
         return sb;
     }
 
