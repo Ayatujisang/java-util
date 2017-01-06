@@ -198,6 +198,8 @@ public class HttpClientUtil {
 	}
 
 	/**
+	 * 注意contentType
+	 *
 	 * 如果中文乱码 需要再进行转码
 	 * <p/>
 	 * resultStr = new String(resultStr.getBytes("ISO-8859-1"), "utf-8");
@@ -212,7 +214,8 @@ public class HttpClientUtil {
 		try {
 			HttpPost httpPost = new HttpPost(url);
 
-			httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+//			httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+			httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
 			httpPost.setHeader(HTTP.CONTENT_ENCODING, "utf-8");
 
 			StringEntity payload = new StringEntity(data, "UTF-8");
@@ -238,7 +241,8 @@ public class HttpClientUtil {
 		HttpPost httpPost = new HttpPost(url);
 		HttpEntity entity = null;
 
-		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+//		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
 		try {
 
 			HttpClient client = new DefaultHttpClient();

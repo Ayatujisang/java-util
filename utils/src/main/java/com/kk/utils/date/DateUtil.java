@@ -133,6 +133,19 @@ public class DateUtil {
 		if (ds == null || aFormat == null) {
 			return null;
 		}
+		try {
+			return aFormat.parse(ds);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Date parse(String ds, String format) {
+		SimpleDateFormat aFormat = new SimpleDateFormat(format);
+		if (ds == null || aFormat == null) {
+			return null;
+		}
 		synchronized (aFormat) {
 			try {
 				return aFormat.parse(ds);
