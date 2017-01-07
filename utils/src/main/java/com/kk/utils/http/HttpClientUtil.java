@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * HttpClient调用工具类
- * 
+ * httpclient
  */
 public class HttpClientUtil {
 	private static final Log logger = LogFactory.getLog("httpClient");
