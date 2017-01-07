@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 
 /**
  *  apache-httpclient
- *  ¿Í»§¶Ë³Ø
+ *  å®¢æˆ·ç«¯æ± 
  */
 public class HttpClientUtils {
     private static final Log LOG = LogFactory.getLog(HttpClientUtils.class);

@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * apache-httpclient
- * ÉèÖÃUA:
+ * è®¾ç½®UA:
  * getMethod.setRequestHeader("User-Agent","Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0");
  */
 public class HttpUtil {
@@ -46,7 +46,7 @@ public class HttpUtil {
             logger.error(e.getMessage(), e);
         }
 
-        // HttpClient¶ÔÓÚÒªÇó½ÓÊÜºó¼Ì·şÎñµÄÇëÇó£¬ÏóPOSTºÍPUTµÈ²»ÄÜ×Ô¶¯´¦Àí×ª·¢
+        // HttpClientå¯¹äºè¦æ±‚æ¥å—åç»§æœåŠ¡çš„è¯·æ±‚ï¼Œè±¡POSTå’ŒPUTç­‰ä¸èƒ½è‡ªåŠ¨å¤„ç†è½¬å‘
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
@@ -55,7 +55,7 @@ public class HttpUtil {
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
-                // ÊÍ·ÅÁ¬½Ó
+                // é‡Šæ”¾è¿æ¥
                 getMethod.releaseConnection();
             }
         } else {
@@ -72,15 +72,15 @@ public class HttpUtil {
         httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, DEFAULT_TIMEOUT);
         httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, DEFAULT_TIMEOUT);
 
-        // ÌîÈë¸÷¸ö±íµ¥ÓòµÄÖµ
+        // å¡«å…¥å„ä¸ªè¡¨å•åŸŸçš„å€¼
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         for (Map.Entry<String, String> entry : paramMap.entrySet()) {
             NameValuePair nvp = new NameValuePair(entry.getKey(), entry.getValue());
             nvps.add(nvp);
         }
         NameValuePair[] data = nvps.toArray(new NameValuePair[0]);
-        // ½«±íµ¥µÄÖµ·ÅÈëpostMethodÖĞ
-        //¿ÉÒÔ´«µİpostµÄdataÖµ
+        // å°†è¡¨å•çš„å€¼æ”¾å…¥postMethodä¸­
+        //å¯ä»¥ä¼ é€’postçš„dataå€¼
         postMethod.setRequestBody(data);
 
         int statusCode = 0;
@@ -92,7 +92,7 @@ public class HttpUtil {
             logger.error(e.getMessage(), e);
         }
 
-        // HttpClient¶ÔÓÚÒªÇó½ÓÊÜºó¼Ì·şÎñµÄÇëÇó£¬ÏóPOSTºÍPUTµÈ²»ÄÜ×Ô¶¯´¦Àí×ª·¢
+        // HttpClientå¯¹äºè¦æ±‚æ¥å—åç»§æœåŠ¡çš„è¯·æ±‚ï¼Œè±¡POSTå’ŒPUTç­‰ä¸èƒ½è‡ªåŠ¨å¤„ç†è½¬å‘
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
@@ -101,7 +101,7 @@ public class HttpUtil {
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
-                // ÊÍ·ÅÁ¬½Ó
+                // é‡Šæ”¾è¿æ¥
                 postMethod.releaseConnection();
             }
         } else {
@@ -134,7 +134,7 @@ public class HttpUtil {
             logger.error(e.getMessage(), e);
         }
 
-        // HttpClient¶ÔÓÚÒªÇó½ÓÊÜºó¼Ì·şÎñµÄÇëÇó£¬ÏóPOSTºÍPUTµÈ²»ÄÜ×Ô¶¯´¦Àí×ª·¢
+        // HttpClientå¯¹äºè¦æ±‚æ¥å—åç»§æœåŠ¡çš„è¯·æ±‚ï¼Œè±¡POSTå’ŒPUTç­‰ä¸èƒ½è‡ªåŠ¨å¤„ç†è½¬å‘
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
@@ -143,7 +143,7 @@ public class HttpUtil {
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
-                // ÊÍ·ÅÁ¬½Ó
+                // é‡Šæ”¾è¿æ¥
                 postMethod.releaseConnection();
             }
         } else {
