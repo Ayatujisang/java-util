@@ -15,6 +15,8 @@ MethodUtils
 
 DateUtils
 
+SerializationUtils 序列化
+
 ### StringEscapeUtils
 * escapeSql 防SQL注入
 * escapeHtml，unescapeHtml 转义/反转义 HTML,注意汉字 如 &--&amp;
