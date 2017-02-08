@@ -1,4 +1,4 @@
-pacakge ${packageModelName};
+package ${packageModelName};
 
 import java.util.Date;
 
