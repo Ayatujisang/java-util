@@ -8,7 +8,7 @@ public interface ${ModelName}Mapper {
 
 	public void insert(${ModelName} ${modelName});
 
-	public ${ModelName} selectById(int id);
+	public ${ModelName} getById(int id);
 
 	public void updateById(${ModelName} ${modelName});
 

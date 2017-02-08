@@ -14,7 +14,7 @@
         <#list fieds as f><#if f_index gt 0 >,</#if>${f.column}</#list>
     </sql>
 
-	<select id="selectById" parameterType="int" resultMap="${ModelName}">
+	<select id="getById" parameterType="int" resultMap="${ModelName}">
 		select
 		<include refid="Columns"/>
 		 from ${tableName} where id = ${SPTJ}{id}
