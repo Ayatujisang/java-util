@@ -85,6 +85,8 @@ public class MybatisGenerator {
         fieldTypeMap.put("float", "Double");
         fieldTypeMap.put("tinyint", "Boolean");
         fieldTypeMap.put("decimal", "BigDecimal");
+        fieldTypeMap.put("text", "String");
+        fieldTypeMap.put("mediumtext", "String");
     }
 
     private static List<String> parseFieldsName(String sql) {
@@ -115,6 +117,12 @@ public class MybatisGenerator {
                         || cont.contains("timestamp NOT NULL")
                         ) {
                     result.add("Date");
+                    continue;
+                }
+                if (cont.contains("mediumtext DEFAULT") || cont.contains("text DEFAULT")
+                        || cont.contains("mediumtext NOT NULL") || cont.contains("text NOT NULL")
+                        ) {
+                    result.add("String");
                     continue;
                 }
                 Pattern pattern = Pattern.compile("([a-z]+)\\(");
