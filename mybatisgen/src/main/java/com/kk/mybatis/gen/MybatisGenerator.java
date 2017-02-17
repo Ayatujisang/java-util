@@ -111,17 +111,12 @@ public class MybatisGenerator {
 
         for (String cont : sqls) {
             if (containVar(cont)) {
-                if (cont.contains("date DEFAULT NULL") || cont.contains("datetime DEFAULT NULL")
-                        || cont.contains("timestamp DEFAULT NULL") ||
-                        cont.contains("date NOT NULL") || cont.contains("datetime NOT NULL")
-                        || cont.contains("timestamp NOT NULL")
-                        ) {
+                if (cont.contains(" date ") || cont.contains(" datetime ")
+                        || cont.contains(" timestamp ")) {
                     result.add("Date");
                     continue;
                 }
-                if (cont.contains("mediumtext DEFAULT") || cont.contains("text DEFAULT")
-                        || cont.contains("mediumtext NOT NULL") || cont.contains("text NOT NULL")
-                        ) {
+                if (cont.contains(" mediumtext ") || cont.contains(" text ")) {
                     result.add("String");
                     continue;
                 }
