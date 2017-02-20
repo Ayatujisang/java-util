@@ -93,7 +93,7 @@ public class DateUtil {
 	/**
 	 * yyyy-MM-dd
 	 * 
-	 * @param date
+	 * @param time
 	 * @return
 	 */
 	public static String defaultDate(long time) {
@@ -103,7 +103,7 @@ public class DateUtil {
 	/**
 	 * yyyy.MM.dd
 	 * 
-	 * @param date
+	 * @param time
 	 * @return
 	 */
 	public static String defaultDate2(long time) {
@@ -127,6 +127,14 @@ public class DateUtil {
 		synchronized (aFormat) {
 			return aFormat.format(aDate);
 		}
+	}
+
+	public static String format(Date aDate, String format) {
+		if (aDate == null || format == null) {
+			return "";
+		}
+		SimpleDateFormat aFormat = new SimpleDateFormat(format);
+		return aFormat.format(aDate);
 	}
 
 	public static Date parse(String ds, SimpleDateFormat aFormat) {
@@ -422,5 +430,4 @@ public class DateUtil {
 		}
 		return -1;
 	}
-
 }
