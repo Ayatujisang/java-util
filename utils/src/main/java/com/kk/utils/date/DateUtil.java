@@ -46,7 +46,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultTimestamp(Date date) {
-		return format(date, new SimpleDateFormat(formatDefaultTimestamp));
+		return format(date, formatDefaultTimestamp);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultTime(Date date) {
-		return format(date, new SimpleDateFormat(formatDefaultTime));
+		return format(date, formatDefaultTime);
 	}
 
     /**
@@ -66,7 +66,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultDateMonth(Date date) {
-		return format(date, new SimpleDateFormat(formatDefaultDateMonth));
+		return format(date, formatDefaultDateMonth);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultTime(long time) {
-		return format(new Date(time), new SimpleDateFormat(formatDefaultTime));
+		return format(new Date(time), formatDefaultTime);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultDate(Date date) {
-		return format(date, new SimpleDateFormat(formatDefaultDate));
+		return format(date, formatDefaultDate);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultDate(long time) {
-		return format(new Date(time), new SimpleDateFormat(formatDefaultDate));
+		return format(new Date(time), formatDefaultDate);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultDate2(long time) {
-		return format(new Date(time), new SimpleDateFormat(formatDefaultDate2));
+		return format(new Date(time), formatDefaultDate2);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String defaultThour(Date date) {
-		return format(date, new SimpleDateFormat(formatDefaultHour));
+		return format(date, formatDefaultHour);
 	}
 
 	public static String format(Date aDate, SimpleDateFormat aFormat) {
