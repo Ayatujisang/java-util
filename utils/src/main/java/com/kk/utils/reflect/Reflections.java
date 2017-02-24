@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
 /**
  * 反射工具类，method,field的封装
  * <p/>
- * 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
+ * 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class等工具函数.
  * <p/>
  * <p/>
  * 推荐使用 BeanUtils，PropertyUtils（commons-beanutils）
@@ -36,8 +36,6 @@ public class Reflections {
     private static final String SETTER_PREFIX = "set";
 
     private static final String GETTER_PREFIX = "get";
-
-    private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
     private static Log logger = LogFactory.getLog(Reflections.class);
 
@@ -322,18 +320,6 @@ public class Reflections {
         }
 
         return (Class) params[index];
-    }
-
-    public static Class<?> getUserClass(Object instance) {
-        Class clazz = instance.getClass();
-        if ((clazz != null) && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
-            Class<?> superClass = clazz.getSuperclass();
-            if ((superClass != null) && !Object.class.equals(superClass)) {
-                return superClass;
-            }
-        }
-        return clazz;
-
     }
 
     /**
