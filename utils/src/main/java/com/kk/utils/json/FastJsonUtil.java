@@ -39,6 +39,7 @@ public class FastJsonUtil {
     }
 
     // obj 普通bean 对日期进行格式化，默认格式为yyyy-MM-dd HH:mm:ss
+    // 如果想再进行格式化，则加上SerializerFeature.PrettyFormat即可。
     public static String toJsonStringWithFormatDate(Object obj) {
         return JSON.toJSONString(obj, SerializerFeature.WriteDateUseDateFormat);
     }
