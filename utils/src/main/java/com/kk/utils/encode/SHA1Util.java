@@ -40,7 +40,7 @@ public class SHA1Util {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(sha1("kongzhidea"));
+		System.out.println(sha1("kk"));
 
 	}
 

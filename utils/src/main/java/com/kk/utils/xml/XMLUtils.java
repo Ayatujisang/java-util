@@ -18,7 +18,7 @@ import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
- * 定义公共的 XML 处理方法。 jdb自带xml处理
+ * 定义公共的 XML 处理方法。 jdk自带xml处理
  */
 public class XMLUtils {
     private static Log logger = LogFactory.getLog(XMLUtils.class);
