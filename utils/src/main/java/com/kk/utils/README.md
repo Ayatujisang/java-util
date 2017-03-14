@@ -15,6 +15,9 @@ MethodUtils
 
 DateUtils
 
+ArrayUtils--Arrays
+CollectionUtils--Collections
+
 SerializationUtils 序列化
 
 ### StringEscapeUtils
