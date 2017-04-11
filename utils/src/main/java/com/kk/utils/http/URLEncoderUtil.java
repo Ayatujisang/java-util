@@ -12,11 +12,11 @@ public class URLEncoderUtil {
 		return encode(str, "UTF-8", null);
 	}
 	
-	public static String encode(final String str, final String enc, final String def) {
+	public static String encode(final String str, final String encode, final String defaultValue) {
 		try {
-			return java.net.URLEncoder.encode(str, "UTF-8");
+			return java.net.URLEncoder.encode(str, encode);
 		} catch (final UnsupportedEncodingException e) {
-			return def;
+			return defaultValue;
 		}
 	}
 	
