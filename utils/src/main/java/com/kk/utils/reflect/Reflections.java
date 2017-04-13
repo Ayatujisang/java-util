@@ -22,6 +22,7 @@ import java.lang.reflect.Type;
  * <p/>
  * <p/>
  * 推荐使用 BeanUtils，PropertyUtils（commons-beanutils）
+ * getProperty找的是getter方法，Reflections.getFieldValue用的是反射
  *
  * FieldUtils.getField(model.getClass(), "fieldName", true)，getField 会找父类field，getDeclaredField不会找父类field。
  *
