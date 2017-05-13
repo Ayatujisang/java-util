@@ -35,3 +35,4 @@ classes
 maven-archiver
 generated-sources
 utils.jar
+target
