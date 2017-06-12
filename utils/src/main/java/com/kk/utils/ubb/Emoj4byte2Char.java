@@ -32,20 +32,69 @@ public class Emoj4byte2Char {
             }
             if (deta > 0) {
                 Emoj4byte ej4 = null;
-                if (deta == 3) {
-                    ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2], conbyte[i + 3]);
-                } else {
-                    ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2]);
+
+                if (i + deta < conbyte.length) {
+                    if (deta == 3) {
+                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2], conbyte[i + 3]);
+                    } else {
+                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2]);
+                    }
                 }
                 if (map.get(ej4) != null) {
                     byte[] l = getBytes(map.get(ej4));
                     byteList.addAll(array2list(l));
                     i += deta;
                 } else {
-                    byteList.add(Byte.valueOf(conbyte[i]));
+                    byteList.add(conbyte[i]);
                 }
             } else {
-                byteList.add(Byte.valueOf(conbyte[i]));
+                byteList.add(conbyte[i]);
+            }
+        }
+        byte[] ret = list2array(byteList);
+        return new String(ret);
+    }
+
+    // 删除4字节 emoj表情
+    public static String stripEmoj(String content) {
+        List<Byte> byteList = new ArrayList<Byte>();
+        byte[] conbyte = new byte[0];
+        try {
+            conbyte = content.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return content;
+        }
+        for (int i = 0; i < conbyte.length; i++) {
+            int deta = 0;
+            if (conbyte[i] == (byte) 0xF0) { // 4位
+                deta = 3;
+            } else if (conbyte[i] == (byte) 0xE2) { //  3位
+                deta = 2;
+            } else if (conbyte[i] == (byte) 0x23) { //  4位  数字
+                deta = 3;
+            } else if (conbyte[i] >= (byte) 0x30 && conbyte[i] <= (byte) 0x39) { //  4位  数字
+                deta = 3;
+            }
+            if (deta > 0) {
+                Emoj4byte ej4 = null;
+
+                if (i + deta < conbyte.length) {
+                    if (deta == 3) {
+                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2], conbyte[i + 3]);
+                    } else {
+                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2]);
+                    }
+                }
+                if (map.get(ej4) != null) {
+                    byte[] l = getBytes(map.get(ej4));
+//                    byteList.addAll(array2list(l));
+                    i += deta;
+                } else {
+                    byteList.add(conbyte[i]);
+                }
+            } else {
+                byteList.add(conbyte[i]);
             }
         }
         byte[] ret = list2array(byteList);

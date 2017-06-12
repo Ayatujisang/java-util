@@ -24,21 +24,6 @@ public class EmojiReplacer {
 	private static final Map<Character, Integer> unifiedSoftbank = new HashMap<Character, Integer>();
 	private static final Map<Character, Integer> numberEmoji = new HashMap<Character, Integer>();
 
-	// 替换四个字节的字符 '\xF0\x9F\x98\x84\xF0\x9F）的解决方案, 如果文本中包含0000 也会过滤掉。
-	public static String removeEmojFourChar(String content) {
-		byte[] conbyte = content.getBytes(); // 可指定编码
-		for (int i = 0; i < conbyte.length; i++) {
-			if ((conbyte[i] & 0xF8) == 0xF0) {
-				for (int j = 0; j < 4; j++) {
-					conbyte[i + j] = 0x30;
-				}
-				i += 3;
-			}
-		}
-		content = new String(conbyte);
-		return content.replaceAll("0000", "");
-	}
-
 	/**
 	 * 假如带img标签的内容则替换成其中的alt的内容 如将<img alt='\u1234' src='http://www.renren.com'
 	 * />替换成\u1234

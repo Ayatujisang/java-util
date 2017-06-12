@@ -1,5 +1,8 @@
 目前问题：
 
+emoj 编码表：
+http://apps.timwhitlock.info/emoji/tables/unicode
+
 
 
 content中 包含4字节字符，无法识别，导致插入数据库失败。
@@ -19,6 +22,9 @@ correct string value: '\xF0\x9F\x98\x84\xE5\x93...'
 如下：
 
 // 过滤4字节字符
+remark = Emoj4byte2Char.stripEmoj(remark);
+
+// 替换emoj表情前准备，将4字节转成char
 remark = Emoj4byte2Char.convert(remark);
 // 过滤emoji表情
 remark = EmojiReplacer.replaceEmoji(remark);
