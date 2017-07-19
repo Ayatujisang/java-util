@@ -69,30 +69,36 @@ JAVA：
 package com.kk.utils;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.mail.internet.MimeMessage;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import javax.activation.DataSource;
+import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
+import java.io.File;
+import java.io.InputStream;
+
 /**
  * 正文支持html格式
- * 群发时候注意，如果有1个邮箱配置错误，需要验证其他人是否可以收到
  */
 public class MailUtil {
     protected static final Log logger = LogFactory.getLog(MailUtil.class);
     private static JavaMailSenderImpl mailSender;
 
-    public static void sendMail(String title, String html, String[] to) {
+
+    public static void sendMail(String title, String html, String to) {
+        if (to == null || "".equals(to)) {
+            return;
+        }
+        String[] toList = to.split(",");
+
         try {
             MimeMessage msg = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(msg, true);
             helper.setFrom(mailSender.getUsername());
-            helper.setTo(to);
+            helper.setTo(toList);
             helper.setSubject(title);
             helper.setText(html, true);
 
@@ -100,14 +106,58 @@ public class MailUtil {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
+
     }
 
-    public static void sendMail(String title, String html, String to) {
+    public static void sendMailWithAttach(String title, String html, String to, File file) {
         if (to == null || "".equals(to)) {
             return;
         }
-        String[] split = to.split(",");
-        sendMail(title, html, split);
+        String[] toList = to.split(",");
+
+        try {
+            MimeMessage msg = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setFrom(mailSender.getUsername());
+            helper.setTo(toList);
+            helper.setSubject(title);
+            helper.setText(html, true);
+
+            if (file != null) {
+                helper.addAttachment(file.getName(), file);
+            }
+
+            mailSender.send(msg);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+    }
+
+    public static void sendMailWithAttach2(String title, String html, String to, InputStream in, String attachmentName) {
+        if (to == null || "".equals(to)) {
+            return;
+        }
+        String[] toList = to.split(",");
+
+        try {
+            MimeMessage msg = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setFrom(mailSender.getUsername());
+            helper.setTo(toList);
+            helper.setSubject(title);
+            helper.setText(html, true);
+
+            if (in != null) {
+                DataSource source = new ByteArrayDataSource(in, "application/octet-stream");
+                helper.addAttachment(attachmentName, source);
+            }
+
+            mailSender.send(msg);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
     }
 
     public JavaMailSenderImpl getMailSender() {
@@ -118,6 +168,6 @@ public class MailUtil {
         MailUtil.mailSender = mailSender;
     }
 }
-    
+ 
 
 ```
