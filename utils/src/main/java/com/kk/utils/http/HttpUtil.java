@@ -7,11 +7,13 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.params.CoreConnectionPNames;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +52,11 @@ public class HttpUtil {
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
-                byte[] responseBody = getMethod.getResponseBody();
-                content = new String(responseBody, encoding);
+//                byte[] responseBody = getMethod.getResponseBody();
+//                content = new String(responseBody, encoding);
+
+                InputStream in = getMethod.getResponseBodyAsStream();
+                content = IOUtils.toString(in,encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
@@ -96,8 +101,11 @@ public class HttpUtil {
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
-                byte[] responseBody = postMethod.getResponseBody();
-                content = new String(responseBody, encoding);
+//                byte[] responseBody = postMethod.getResponseBody();
+//                content = new String(responseBody, encoding);
+
+                InputStream in = postMethod.getResponseBodyAsStream();
+                content = IOUtils.toString(in,encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
@@ -138,8 +146,11 @@ public class HttpUtil {
         String content = null;
         if (statusCode == HttpStatus.SC_OK) {
             try {
-                byte[] responseBody = postMethod.getResponseBody();
-                content = new String(responseBody, encoding);
+//                byte[] responseBody = postMethod.getResponseBody();
+//                content = new String(responseBody, encoding);
+
+                InputStream in = postMethod.getResponseBodyAsStream();
+                content = IOUtils.toString(in,encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
