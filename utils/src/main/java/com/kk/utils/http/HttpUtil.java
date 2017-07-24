@@ -56,7 +56,7 @@ public class HttpUtil {
 //                content = new String(responseBody, encoding);
 
                 InputStream in = getMethod.getResponseBodyAsStream();
-                content = IOUtils.toString(in,encoding);
+                content = IOUtils.toString(in, encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
@@ -105,7 +105,7 @@ public class HttpUtil {
 //                content = new String(responseBody, encoding);
 
                 InputStream in = postMethod.getResponseBodyAsStream();
-                content = IOUtils.toString(in,encoding);
+                content = IOUtils.toString(in, encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
@@ -150,7 +150,7 @@ public class HttpUtil {
 //                content = new String(responseBody, encoding);
 
                 InputStream in = postMethod.getResponseBodyAsStream();
-                content = IOUtils.toString(in,encoding);
+                content = IOUtils.toString(in, encoding);
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             } finally {
