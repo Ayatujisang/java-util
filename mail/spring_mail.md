@@ -171,3 +171,45 @@ public class MailUtil {
  
 
 ```
+
+
+```
+	/**
+     * 专门用于发送xls格式的excel附件
+     * @param title
+     * @param html
+     * @param to
+     * @param excel
+     * @param attachmentName
+     */
+    public static void sendMailWithXlsAttach(String title, String html, String to, HSSFWorkbook excel, String attachmentName) {
+        if (to == null || "".equals(to)) {
+            return;
+        }
+        logger.info("发送邮件:to={},title={}", to, title);
+
+        String[] toList = to.split(",");
+
+        try {
+            MimeMessage msg = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setFrom(mailSender.getUsername());
+            helper.setTo(toList);
+            helper.setSubject(title);
+            helper.setText(html, true);
+
+            if (excel != null) {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                excel.write(bos);
+                DataSource source = new ByteArrayDataSource(bos.toByteArray(), "application/octet-stream");
+                helper.addAttachment(attachmentName, source);
+            }
+
+            mailSender.send(msg);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+    }
+
+```
