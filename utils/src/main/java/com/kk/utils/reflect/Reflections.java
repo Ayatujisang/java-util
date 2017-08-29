@@ -419,6 +419,7 @@ public class Reflections {
 
     /**
      * 获取类名，不含包名，支持匿名内部类。
+     * class.getSimpleName() 不支持匿名内部类.
      *
      * Generates a simplified name from a {@link Class}.  Similar to {@link Class#getSimpleName()}, but it works fine
      * with anonymous classes.
