@@ -12,8 +12,13 @@ public class ByteBufTest {
 
     @Test
     public void testEmpty() {
-        // 空 byteBuf，默认capacity为256。
-        ByteBuf byteBuf = Unpooled.buffer();
+        // 堆内存
+        ByteBuf heapBuffer = Unpooled.buffer();
+        System.out.println(heapBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeHeapByteBuf
+
+        // 直接内存
+        ByteBuf direcBuffer = Unpooled.directBuffer();
+        System.out.println(direcBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeNoCleanerDirectByteBuf
     }
 
     // 字符串，字节数组，ByteBuf 转换
@@ -21,6 +26,9 @@ public class ByteBufTest {
     public void testByte() {
         byte[] bytes = "abc".getBytes();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(bytes);
+
+        System.out.println(byteBuf.getClass().getSimpleName()); // UnpooledHeapByteBuf
+
 
         // 字节长度
         System.out.println(byteBuf.capacity());

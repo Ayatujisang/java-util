@@ -1,4 +1,4 @@
-package com.kk.socket;
+package com.kk.test;
 
 import io.netty.util.internal.SystemPropertyUtil;
 import org.junit.Test;
