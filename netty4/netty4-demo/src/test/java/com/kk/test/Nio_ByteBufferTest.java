@@ -5,15 +5,18 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 
 /**
-   内核态：控制计算机的硬件资源，并提供上层应用程序运行的环境。比如socket I/0操作或者文件的读写操作等
-   用户态：上层应用程序的活动空间，应用程序的执行必须依托于内核提供的资源。
-   系统调用：为了使上层应用能够访问到这些资源，内核为上层应用提供访问的接口。
+ * 内核态：控制计算机的硬件资源，并提供上层应用程序运行的环境。比如socket I/0操作或者文件的读写操作等
+ * 用户态：上层应用程序的活动空间，应用程序的执行必须依托于内核提供的资源。
+ * 系统调用：为了使上层应用能够访问到这些资源，内核为上层应用提供访问的接口。
+ * <p>
+ * direct ByteBuffer可以通过-XX:MaxDirectMemorySize来设置，此参数的含义是当Direct ByteBuffer分配的堆外内存到达指定大小后，即触发Full GC。
+ * 注意该值是有上限的，默认是64M，最大为sun.misc.VM.maxDirectMemory()，在程序中中可以获得-XX:MaxDirectMemorySize的设置的值
  */
 
 
 /**
-   direct ByteBuffer可以通过-XX:MaxDirectMemorySize来设置，此参数的含义是当Direct ByteBuffer分配的堆外内存到达指定大小后，即触发Full GC。
-   注意该值是有上限的，默认是64M，最大为sun.misc.VM.maxDirectMemory()，在程序中中可以获得-XX:MaxDirectMemorySize的设置的值
+ direct ByteBuffer可以通过-XX:MaxDirectMemorySize来设置，此参数的含义是当Direct ByteBuffer分配的堆外内存到达指定大小后，即触发Full GC。
+ 注意该值是有上限的，默认是64M，最大为sun.misc.VM.maxDirectMemory()，在程序中中可以获得-XX:MaxDirectMemorySize的设置的值
  */
 
 /**
@@ -63,10 +66,28 @@ public class Nio_ByteBufferTest {
 
         System.out.println(new String(byteBuffer.array()));
 
-
         System.out.println(byteBuffer.get(0));
         System.out.println(byteBuffer.get(1));
         System.out.println(byteBuffer.get(2));
+    }
+
+    // Heap Buffer则是分配在堆上的：ByteBuffer.allocate
+    @Test
+    public void testHeapByteBuffer2() {
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(100);
+
+        byteBuffer.put((byte) 48);
+        byteBuffer.put((byte) 97);
+        byteBuffer.put((byte) 98);
+
+        System.out.println(new String(byteBuffer.array()));
+
+        byteBuffer.flip(); // 反转此缓冲区，当前位置设置为EOF，指针指向0.
+
+        System.out.println(byteBuffer.get());
+        System.out.println(byteBuffer.get());
+        System.out.println(byteBuffer.get());
     }
 
     // Direct Buffer 堆外内存：ByteBuffer.allocateDirect
@@ -86,5 +107,108 @@ public class Nio_ByteBufferTest {
         System.out.println(byteBuffer.get(0));
         System.out.println(byteBuffer.get(1));
         System.out.println(byteBuffer.get(2));
+    }
+
+    /**
+     *  当前位置设置为EOF，指针挪回位置0
+            相当于下面两句：
+            // buffer.limit(4);
+            // buffer.position(0);
+        buffer.flip();
+     */
+    /**
+     * compact()，压缩数据，把EOF位置重置为最大容量。比如当前EOF是6，当前指针指向2
+     （即0,1的数据已经写出了，没用了），
+     那么compact方法将把2,3,4,5的数据挪到0,1,2,3的位置，
+     然后指针指向4的位置。这样的意思是，从4的位置接着再写入数据。
+     */
+    @Test
+    public void testBuffer0() {
+
+        //10个字节大小
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+
+        //容量是10，EOF位置是10，初始位置也是0
+        v(buffer.capacity());
+        v(buffer.limit());
+
+        //输出看看，输出是10个0
+        printBuffer(buffer);
+
+        System.out.println("---------");
+
+
+        //把指针挪回位置0
+        buffer.rewind();
+
+        //写操作，指针会自动移动
+        buffer.putChar('a'); // char占2个字节。
+        v(buffer.position()); //指针指向2
+
+        buffer.putChar('啊');
+        v(buffer.position()); //指针指向4
+
+        //当前位置设置为EOF，指针挪回位置0
+        //相当于下面两句：
+//        buffer.limit(4);
+//        buffer.position(0);
+        buffer.flip();
+
+        //输出前4个字节看看，输出是0 61 55 4a，61为 'a' 16进制形式。
+        printBuffer(buffer);
+
+        System.out.println("---------");
+
+        //指针挪到位置1，压缩一下
+        //输出是61 55 4a 4a 0 0 0 0 0 0
+        //compact方法会把EOF位置重置为最大容量，这里就是10
+        buffer.position(1);
+        buffer.compact();
+        printBuffer(buffer);
+
+        System.out.println("---------");
+
+        //注意当前指针指向3，继续写入数据的话，就会覆盖后面的数据了。
+        v(buffer.position());
+
+    }
+
+    /**
+     * 输出buffer内容.
+     */
+    public static void printBuffer(ByteBuffer buffer) {
+
+        //记住当前位置
+        int p = buffer.position();
+
+        //指针挪到0
+        buffer.position(0);
+
+        //循环输出每个字节内容
+        for (int i = 0; i < buffer.limit(); i++) {
+            byte b = buffer.get(); //读操作，指针会自动移动
+            v(Integer.toHexString(b));
+        }
+
+        //指针再挪回去
+        buffer.position(p);
+
+        //本想用mark()和reset()来实现。
+        //但是，它们貌似只能正向使用。
+        //如，位置6的时候，做一下Mark，
+        //然后在位置10（位置要大于6）的时候，用reset就会跳回位置6.
+
+        //而position(n)这个方法，如果之前做了Mark，但是Mark位置大于新位置，Mark会被清除。
+        //也就是说，做了Mark后，只能向前跳，不能往回跳，否则Mark就丢失。
+        //rewind()方法，更干脆，直接清除mark。
+        //flip()方法，也清除mark
+        //clear()方法，也清除mark
+        //compact方法，也清除mark
+
+        //所以，mark方法干脆不要用了，自己拿变量记一下就完了。
+    }
+
+    public static void v(Object o) {
+        System.out.println(o);
     }
 }

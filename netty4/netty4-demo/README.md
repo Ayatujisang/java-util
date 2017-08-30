@@ -1,14 +1,16 @@
 
-#### [netty in action 中文版 csdn在线](http://blog.csdn.net/qq_34590943/article/details/52253683)
-#### [netty in action 中文版 下载](http://download.csdn.net/download/xiaoyu5256/9799439)
+#### 基础知识
+* [Java 并发编程之 NIO 简明教程](http://mp.weixin.qq.com/s/MlWir1tJARx5UN_SS6iSHQ)
+* [堆外内存之 DirectByteBuffer 详解](http://mp.weixin.qq.com/s/PdGO53sPT0ZyfHJXkzTMqA)
 
+#### netty 书籍
+* [netty in action 中文版 csdn在线](http://blog.csdn.net/qq_34590943/article/details/52253683)
+* [netty in action 中文版 下载](http://download.csdn.net/download/xiaoyu5256/9799439)
 
-#### [netty-in-action-cn 章节代码样例](https://github.com/ReactivePlatform/netty-in-action-cn)
-
-#### [netty4-in-action netty代码样例](https://github.com/TiFG/netty4-in-action)
-
-#### netty样例代码在netty-example包中。
-
+#### netty 代码样例
+* [netty-in-action-cn 章节代码样例](https://github.com/ReactivePlatform/netty-in-action-cn)
+* [netty4-in-action netty代码样例](https://github.com/TiFG/netty4-in-action)
+* netty样例代码在netty-example包中。
 
 #### netty4入门
 * helloworld  com.kk.netty4.helloworld
