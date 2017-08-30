@@ -1,6 +1,7 @@
 package com.kk.test;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import org.junit.Test;
 
@@ -12,13 +13,28 @@ public class ByteBufTest {
 
     @Test
     public void testEmpty() {
-        // 堆内存
-        ByteBuf heapBuffer = Unpooled.buffer();
-        System.out.println(heapBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeHeapByteBuf
+        {
+            // 堆内存
+            ByteBuf heapBuffer = Unpooled.buffer();
+            System.out.println(heapBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeHeapByteBuf
 
-        // 直接内存
-        ByteBuf direcBuffer = Unpooled.directBuffer();
-        System.out.println(direcBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeNoCleanerDirectByteBuf
+            // 直接内存
+            ByteBuf direcBuffer = Unpooled.directBuffer();
+            System.out.println(direcBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeNoCleanerDirectByteBuf
+        }
+
+        // 内存池
+        {
+            // directByDefault参数为true，强制为直接内存
+            ByteBuf heapBuffer = PooledByteBufAllocator.DEFAULT.buffer();
+
+            System.out.println(heapBuffer.getClass().getSimpleName()); // PooledUnsafeDirectByteBuf
+
+            // 直接内存
+            ByteBuf direcBuffer = PooledByteBufAllocator.DEFAULT.directBuffer();
+            System.out.println(direcBuffer.getClass().getSimpleName()); // PooledUnsafeDirectByteBuf
+        }
+
     }
 
     // 字符串，字节数组，ByteBuf 转换
