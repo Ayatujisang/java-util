@@ -4,6 +4,8 @@ import io.netty.buffer.*;
 import io.netty.util.ByteProcessor;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 /**
@@ -18,6 +20,7 @@ import java.nio.charset.Charset;
  * ByteBuf.discardReadBytes()可以用来清空 ByteBuf 中已读取的数据，从而使 ByteBuf 有多余的空间容纳新的数据，
  * 但是 discardReadBytes()可能会涉及内存复制，因为它需要移 动 ByteBuf 中可读的字节到开始位置，这样的操作会影响性能，
  * 一般在需要马上释放内存的 时候使用收益会比较大。
+ *
  *
  * @auther zhihui.kzh
  * @create 29/8/1711:54
@@ -122,6 +125,30 @@ public class ByteBufTest {
             System.out.println(byteBuf.readInt()); // 200
 
 
+        }
+    }
+
+    /**
+     * 对应 OutputStream：ByteBufOutputStream bout = new ByteBufOutputStream(out);
+     */
+    @Test
+    public void testStream() throws IOException {
+        {
+            ByteBuf heapBuffer = Unpooled.buffer();
+            ByteBufOutputStream bout = new ByteBufOutputStream(heapBuffer);
+
+            bout.writeInt(1);
+
+            ByteBuf buffer = bout.buffer();
+            System.out.println(buffer.readInt());
+        }
+        {
+            ByteBuf heapBuffer = Unpooled.buffer();
+            heapBuffer.writeInt(1);
+
+            ByteBufInputStream bin = new ByteBufInputStream(heapBuffer);
+
+            System.out.println(bin.readInt());
         }
     }
 }
