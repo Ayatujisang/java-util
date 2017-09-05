@@ -129,7 +129,19 @@
   需要同时实现：encode和decode方法。
   可以使用 CombinedChannelDuplexHandler 绑定解码器和编码器，样例如：IntegerCodec
 
-8.3 解析分隔符：
+8.3.1 拆包器
+    拆包器基类为ByteToMessageDecoder，其内部有一个累加器，将每次新读取到的数据累加到本地字节容器，然后对累加后的本地字节容器中的数据进行拆包，拆成一个完整的业务数据包。
+    默认情况下使用简单的MERGE_CUMULATOR累加器
+        原理是每次都将读取到的数据通过内存拷贝的方式，拼接到一个大的字节容器中：ByteToMessageDecoder中的cumulation。
+        private Cumulator cumulator = MERGE_CUMULATOR;
+
+
+    具体实现类：
+        LineBasedFrameDecoder -> 根据换行符\n或\r\n进行拆包
+        DelimiterBasedFrameDecoder -> 根据用户定义的标识符进行拆包
+        LengthFieldBasedFrameDecoder -> 根据包头长度进行拆包，适用于私有协议解码
+
+8.3.2 解析分隔符：
     DelimiterBasedFrameDecoder，解码器，接收 ByteBuf 由一个或多个分隔符拆分， 如 NULL 或换行符
     LineBasedFrameDecoder，解码器，接收 ByteBuf 以分割线结束，如"\n"和"\r\n"
          默认过滤分隔符，即服务端业务handler中收到的消息中把分隔符已经strip了。
