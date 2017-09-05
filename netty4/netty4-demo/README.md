@@ -30,6 +30,11 @@
 
 * object 对象传输， 见 com.kk.netty4.object
     * ObjectDecoder，ObjectEncoder
+    * ObjectDecoder 继承：LengthFieldBasedFrameDecoder 拆包器。
+    * 序列化方式：
+        * CompactObjectInputStream
+        * CompactObjectOutputStream
+        * 继承 jdk序列化方式，修改序列化的header和classDescription部分。
 
 ```
 1. Netty 中有两个方向的数据流，入站(ChannelInboundHandler)和出站 (ChannelOutboundHandler)之间有一个明显的区别:
