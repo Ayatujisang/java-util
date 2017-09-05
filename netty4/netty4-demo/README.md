@@ -149,6 +149,18 @@
     样例如下：
         pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter())); // 指定分隔符为 \n,\r\n
         pipeline.addLast("framer", new LineBasedFrameDecoder(8192, true, true)); // 换行分割，也可以这样写
+8.4
+    对Decoder来说，主要有两个顶层的抽象类，一个是从字节流到消息的ByteToMessageDecoder，一个是中间消息到业务消息的MessageToMessageDecoder。
+        ByteToMessageDecoder放置在MessageToMessageDecoder前面，处理inbound事件。
+        最后当ChannelPipeline到达后端的业务ChannelHandler时，拿到的消息是已经解码后的业务消息。
+
+
+    编码的过程也是一样，提供两个顶层接口，
+        MessageToMessageEncoder负责把业务消息转化成中间消息
+        MessageToByteEncoder负责把中间消息/业务消息转化成字节流
+
+
+
 ```
 
 
