@@ -87,6 +87,13 @@
    ChannelInboundHandlerAdapter 的 channelRead 方法处理完消息后不会自动释放消息，
    若想自动释放收到的消息，可以使用 SimpleChannelInboundHandler<I>。
 
+        内存池管理：
+            对原消息不做处理，调用 ctx.fireChannelRead(msg)把原消息往下传，那不用做什么释放。
+            将原消息转化为新的消息并调用 ctx.fireChannelRead(newMsg)往下传，那必须把原消息release掉。
+            如果已经不再调用ctx.fireChannelRead(msg)传递任何消息，那更要把原消息release掉。
+
+            MessageToMessageDecoder和ByteToMessageDecoder已经对原消息进行了release操作。
+
         //手动释放消息
         ReferenceCountUtil.release(msg);
 
