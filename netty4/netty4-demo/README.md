@@ -12,7 +12,34 @@
 * [netty4-in-action netty代码样例](https://github.com/TiFG/netty4-in-action)
 * netty样例代码在netty-example包中。
 
+#### 内存池
+```
+在4.0.x版本中，UnpooledByteBufAllocator是默认的allocator，尽管其存在某些限制。
+5.* 默认启用内存池。
+
+netty4.0.x 启动内存池：
+    bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+    bootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);//关键是这句
+
+option()是提供给NioServerSocketChannel用来接收进来的连接,也就是boss线程。
+childOption()是提供给由父管道ServerChannel接收到的连接，也就是worker线程。
+
+
+4.1.14 默认启用了内存池。
+    对原消息不做处理，调用 ctx.fireChannelRead(msg)把原消息往下传，那不用做什么释放。
+    将原消息转化为新的消息并调用 ctx.fireChannelRead(newMsg)往下传，那必须把原消息release掉。
+    如果已经不再调用ctx.fireChannelRead(msg)传递任何消息，那更要把原消息release掉。
+
+    在handler中打印：ctx.alloc().getClass().getSimpleName()， 结果为：PooledByteBufAllocator
+
+    DefaultChannelConfig.getOption()  获取配置信息。
+        getAllocator()  获取 Allocator
+            ByteBufAllocator.DEFAULT
+                ByteBufUtil.DEFAULT_ALLOCATOR   默认为 pooled
+```
+
 #### netty4入门
+* EchoServer ，代码见： example包。
 * helloworld  com.kk.netty4.helloworld
     * SimpleChannelInboundHandler 支持泛型，
         * 继承：ChannelInboundHandlerAdapter。
