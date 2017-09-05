@@ -36,7 +36,8 @@ public class ObjectClient {
                         public void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
 
-                            pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+                            pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE,
+                                    ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
                             pipeline.addLast("encoder", new ObjectEncoder());
 
                             pipeline.addLast("handler", new SimpleChannelInboundHandler<User>() {

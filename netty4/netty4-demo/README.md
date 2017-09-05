@@ -149,6 +149,7 @@
     具体实现类：
         LineBasedFrameDecoder -> 根据换行符\n或\r\n进行拆包
         DelimiterBasedFrameDecoder -> 根据用户定义的标识符进行拆包
+        FixedLengthFrameDecoder --> 固定长度解码器，它可以按照指定的长度对消息进行解码（用途较少）
         LengthFieldBasedFrameDecoder -> 根据包头长度进行拆包，适用于私有协议解码
 
 8.3.2 解析分隔符：

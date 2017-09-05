@@ -11,7 +11,7 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
 /**
- * 对象传输
+ * 对象传输，传输User对象
  *
  * @auther zhihui.kzh
  * @create 5/9/1711:48
@@ -37,7 +37,8 @@ public class ObjectServer {
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
 
-                    pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+                    pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE,
+                            ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
                     pipeline.addLast("encoder", new ObjectEncoder());
 
                     // 自己的逻辑Handler
