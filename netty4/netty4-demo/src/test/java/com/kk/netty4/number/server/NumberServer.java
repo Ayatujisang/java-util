@@ -1,5 +1,6 @@
 package com.kk.netty4.number.server;
 
+import com.kk.netty4.number.IntegerCodec;
 import com.kk.netty4.number.IntegerDecoder;
 import com.kk.netty4.number.IntegerEncoder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -40,8 +41,11 @@ public class NumberServer {
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
 
-                    pipeline.addLast("decoder", new IntegerDecoder());
-                    pipeline.addLast("encoder", new IntegerEncoder());
+//                    pipeline.addLast("decoder", new IntegerDecoder());
+//                    pipeline.addLast("encoder", new IntegerEncoder());
+
+                    // 使用编解码器
+                    pipeline.addLast("codec", new IntegerCodec());
 
 
                     // 自己的逻辑Handler

@@ -127,7 +127,7 @@
   MessageToMessageCodec 用于 message-to-message 的编码和解码，可以看成是 MessageToMessageDecoder 和 MessageToMessageEncoder 的组合体。
 
   需要同时实现：encode和decode方法。
-  可以使用 CombinedChannelDuplexHandler 绑定解码器和编码器 很容易实现
+  可以使用 CombinedChannelDuplexHandler 绑定解码器和编码器，样例如：IntegerCodec
 
 8.3 解析分隔符：
     DelimiterBasedFrameDecoder，解码器，接收 ByteBuf 由一个或多个分隔符拆分， 如 NULL 或换行符

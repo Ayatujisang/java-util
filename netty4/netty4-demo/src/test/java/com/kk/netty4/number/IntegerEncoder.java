@@ -5,6 +5,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
+ * int 转ByteBuf
+ * <p>
+ * MessageToByteEncoder 输入需要指定泛型。
+ *
  * @auther zhihui.kzh
  * @create 5/9/1711:53
  */
