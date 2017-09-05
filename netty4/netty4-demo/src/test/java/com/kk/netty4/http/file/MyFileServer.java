@@ -1,4 +1,4 @@
-package com.kk.netty4.file;
+package com.kk.netty4.http.file;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -13,15 +13,12 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslProvider;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
-import java.io.File;
-
 /**
  * 通过netty启动 文件服务器
  *
  * @auther zhihui.kzh
  * @create 28/8/1711:14
  */
-
 public class MyFileServer {
     static String rootPath = "/Users/kongzhihui/test";
 
