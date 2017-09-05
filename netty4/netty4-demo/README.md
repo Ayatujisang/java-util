@@ -24,6 +24,9 @@
     * SimpleChannelInboundHandler.acceptInboundMessage()方法检测参数是否和泛型类型一致。 只有类型一致才会调用channelRead0()方法。
         * 见：ChannelInboundHandlerTest
 
+* number  见com.kk.netty4.number
+    * 自定义编解码，只允许输入int。
+    * IntegerDecoder，IntegerEncoder
 
 ```
 1. Netty 中有两个方向的数据流，入站(ChannelInboundHandler)和出站 (ChannelOutboundHandler)之间有一个明显的区别:
