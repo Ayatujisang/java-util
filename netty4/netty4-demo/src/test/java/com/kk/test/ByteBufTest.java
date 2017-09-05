@@ -28,7 +28,7 @@ public class ByteBufTest {
     public void testEmpty() {
         {
             // 堆内存
-            ByteBuf heapBuffer = Unpooled.buffer();
+            ByteBuf heapBuffer = Unpooled.buffer(); // 相当于：UnpooledByteBufAllocator.DEFAULT.buffer()
             System.out.println(heapBuffer.getClass().getSimpleName()); // InstrumentedUnpooledUnsafeHeapByteBuf
 
             // 直接内存
