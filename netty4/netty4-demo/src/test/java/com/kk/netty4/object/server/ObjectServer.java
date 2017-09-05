@@ -1,23 +1,22 @@
-package com.kk.netty4.number.server;
+package com.kk.netty4.object.server;
 
-import com.kk.netty4.number.IntegerCodec;
-import com.kk.netty4.number.IntegerDecoder;
-import com.kk.netty4.number.IntegerEncoder;
+import com.kk.model.User;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-import java.net.InetAddress;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 
 /**
- * 自定义 编解码
+ * 对象传输
  *
  * @auther zhihui.kzh
  * @create 5/9/1711:48
  */
-public class NumberServer {
+public class ObjectServer {
     /**
      * 服务端监听的端口地址
      */
@@ -32,34 +31,26 @@ public class NumberServer {
             b.group(bossGroup, workerGroup);
             b.channel(NioServerSocketChannel.class);
 
-            // socket等待队列长度
-//            b.option(ChannelOption.SO_BACKLOG, 100);
-
-//            b.handler(new LoggingHandler(LogLevel.INFO));
-
             b.childHandler(new ChannelInitializer<SocketChannel>() {
 
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
 
-//                    pipeline.addLast("decoder", new IntegerDecoder());
-//                    pipeline.addLast("encoder", new IntegerEncoder());
-
-                    // 使用编解码器
-                    pipeline.addLast("codec", new IntegerCodec());
-
+                    pipeline.addLast("decoder", new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
+                    pipeline.addLast("encoder", new ObjectEncoder());
 
                     // 自己的逻辑Handler
-                    pipeline.addLast("handler", new SimpleChannelInboundHandler<Integer>() {
+                    pipeline.addLast("handler", new SimpleChannelInboundHandler<User>() {
 
                         @Override
-                        protected void channelRead0(ChannelHandlerContext ctx, Integer msg) throws Exception {
+                        protected void channelRead0(ChannelHandlerContext ctx, User msg) throws Exception {
                             // 收到消息直接打印输出
                             System.out.println(ctx.channel().remoteAddress() + " Say : " + msg);
 
-                            // 返回客户端消息 - 我已经接收到了你的消息
-                            ctx.writeAndFlush(msg + 100);
+                            // 返回客户端消息
+                            msg.setName("server:" + msg.getName());
+                            ctx.writeAndFlush(msg);
                         }
 
                         @Override

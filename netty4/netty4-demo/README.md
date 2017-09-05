@@ -28,6 +28,9 @@
     * 自定义编解码，只允许输入int。
     * IntegerDecoder，IntegerEncoder
 
+* object 对象传输， 见 com.kk.netty4.object
+    * ObjectDecoder，ObjectEncoder
+
 ```
 1. Netty 中有两个方向的数据流，入站(ChannelInboundHandler)和出站 (ChannelOutboundHandler)之间有一个明显的区别:
     若数据是从用户应用程序到远程主机 则是“出站(outbound)”，相反若数据时从远程主机到用户应用程序则是“入站(inbound)”。
