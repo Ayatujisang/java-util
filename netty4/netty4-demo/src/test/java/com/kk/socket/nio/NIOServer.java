@@ -12,6 +12,11 @@ import java.util.Iterator;
 
 /**
  * NIO服务端
+ * <p>
+ * <p>
+ * OP_ACCEPT，有新连接时得到通知
+ * OP_CONNECT，连接完成后得到通知
+ * OP_READ，准备好读取数据时得到通知   OP_WRITE，写入数据到通道时得到通知
  *
  * @author 小路
  */
