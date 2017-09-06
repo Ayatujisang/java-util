@@ -50,6 +50,7 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
     * 如果一个channelPipeline中有多个channelHandler时，且这些channelHandler中有同样的方法时，例如channelActive方法，只会调用处在第一个的channelHandler中的channelActive方法，如果你想要调用后续的channelHandler的同名的方法就需要调用以“fire”为开头的方法了
     * SimpleChannelInboundHandler.acceptInboundMessage()方法检测参数是否和泛型类型一致。 只有类型一致才会调用channelRead0()方法。
         * 见：ChannelInboundHandlerTest
+    * 常见编码类： CharsetUtil，如： CharsetUtil.UTF_8
 
 * number  见com.kk.netty4.number
     * 自定义编解码，只允许输入int。
