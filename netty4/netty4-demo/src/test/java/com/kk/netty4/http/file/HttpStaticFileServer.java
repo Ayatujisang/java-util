@@ -5,7 +5,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.example.http.file.HttpStaticFileServerInitializer;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
@@ -14,12 +13,12 @@ import io.netty.handler.ssl.SslProvider;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 /**
- * 通过netty启动 文件服务器
+ * 通过netty启动 文件服务器， 见example包。
  *
  * @auther zhihui.kzh
  * @create 28/8/1711:14
  */
-public class MyFileServer {
+public class HttpStaticFileServer {
     static String rootPath = "/Users/kongzhihui/test";
 
     static final boolean SSL = System.getProperty("ssl") != null;
@@ -48,7 +47,7 @@ public class MyFileServer {
             Channel ch = b.bind(PORT).sync().channel();
 
             System.err.println("Open your web browser and navigate to " +
-                    (SSL? "https" : "http") + "://127.0.0.1:" + PORT + '/');
+                    (SSL ? "https" : "http") + "://127.0.0.1:" + PORT + '/');
 
             ch.closeFuture().sync();
         } finally {

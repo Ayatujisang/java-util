@@ -62,8 +62,15 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
         * CompactObjectInputStream
         * CompactObjectOutputStream
         * 继承 jdk序列化方式，修改序列化的header和classDescription部分。
+        * ObjectEncoder 中先写长度占位符，然后再写自定义对象序列化，然后再设置头部长度占位符长度。
+
+* http.helloword  见 com.kk.netty4.http.helloworld
+    * netty搭建http服务
+
+* http.file   http形式访问本地文件，见 com.kk.netty4.http.file
 
 ```
+
 1. Netty 中有两个方向的数据流，入站(ChannelInboundHandler)和出站 (ChannelOutboundHandler)之间有一个明显的区别:
     若数据是从用户应用程序到远程主机 则是“出站(outbound)”，相反若数据时从远程主机到用户应用程序则是“入站(inbound)”。
 
