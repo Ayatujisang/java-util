@@ -16,6 +16,8 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
  * 通过netty启动 文件服务器， 见example包。
  * <p>
  * 添加 META-INF/mime.types，可以设置访问文件形式：contentType。  默认为下载格式。
+ * <p>
+ * rootPath 为自定义展示目录。  example包中为取  user.dir 目录。
  *
  * @auther zhihui.kzh
  * @create 28/8/1711:14
@@ -44,7 +46,7 @@ public class HttpStaticFileServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new HttpStaticFileServerInitializer(sslCtx));
+                    .childHandler(new HttpStaticFileServerInitializer(sslCtx, rootPath));
 
             Channel ch = b.bind(PORT).sync().channel();
 
