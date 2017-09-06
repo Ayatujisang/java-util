@@ -69,6 +69,7 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
     * netty搭建http服务
 
 * http.file   http形式访问本地文件，见 com.kk.netty4.http.file
+    * 下载文件服务器
 
 ```
 

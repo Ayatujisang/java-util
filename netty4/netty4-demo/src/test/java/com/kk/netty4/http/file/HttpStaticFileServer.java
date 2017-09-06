@@ -14,6 +14,8 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 /**
  * 通过netty启动 文件服务器， 见example包。
+ * <p>
+ * 添加 META-INF/mime.types，可以设置访问文件形式：contentType。  默认为下载格式。
  *
  * @auther zhihui.kzh
  * @create 28/8/1711:14

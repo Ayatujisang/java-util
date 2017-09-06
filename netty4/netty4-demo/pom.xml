@@ -143,6 +143,7 @@
                     <include>**/*.ftl</include>
                     <include>**/*.txt</include>
                     <include>**/*.online</include>
+                    <include>**/*.types</include>
                 </includes>
             </resource>
         </resources>
@@ -153,6 +154,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
                     <include>**/*.java</include>
+                    <include>**/*.types</include>
                 </includes>
             </testResource>
             <testResource>
