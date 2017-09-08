@@ -17,6 +17,13 @@ public class HelloServerHandler extends SimpleChannelInboundHandler<String> {
         ctx.writeAndFlush("Received your message !\n");
     }
 
+    // 读取完毕
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        super.channelReadComplete(ctx);
+    }
+
+
     /*
      * 
      * 覆盖 channelActive 方法 在channel被启用的时候触发 (在建立连接的时候)

@@ -98,12 +98,19 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
 
 4. SimpleChannelInboundHandler继承ChannelInboundHandlerAdapter，可以指定泛型，如：HelloClientHandler，只处理此类型的数据。
 
-5 ChannelHandlerContext
+5 ChannelHandlerContext(ctx)
     每个 ChannelHandler 被添加到 ChannelPipeline 后，都会创建一个 ChannelHandlerContext 并与之创建的 ChannelHandler 关联绑定。
     ChannelHandlerContext 允许 ChannelHandler 与其他的 ChannelHandler 实现进行交互，这是相同 ChannelPipeline 的一部分。
     ChannelHandlerContext 不会改变添加到其中的 ChannelHandler，因此它是安 全的。
 
     @Sharable注解主要是用来标示一个ChannelHandler可以被安全地共享，即可以在多个Channel的ChannelPipeline中使用同一个ChannelHandler，而不必每一个ChannelPipeline都重新new一个新的ChannelHandler。
+
+    在 Netty 目前基于 EventLoop 的线程模型中，Netty 是要求用户的ChannelHandler的实现必须要是线程安全的。
+    这样，其便可以在不同的Channel的ChannelPipeline中安全的共享。所以，设计上为了避免非线程安全的ChannelHandler被错误地共享，
+    所以 Netty 要求你标注一个ChannelHandler为@Shareable来指示它的线程安全性。
+
+    从ctx中获取 pipeline：ctx.pipeline()
+    判断pipeline中是否添加某ChanHandler：ctx.pipeline().get(XXXHandler.class) != null 表示添加了XXXHandler。
 
 
 6.  Channel 生命周期四个不同的状态
