@@ -229,7 +229,18 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
         MessageToByteEncoder负责把中间消息/业务消息转化成字节流
 
 
+9.1 IdleStateHandler 心跳机制
+    IdleStateHandler这个类会根据你设置的超时参数的类型和值，循环去检测channelRead和write方法多久没有被调用了，
+    如果这个时间超过了你设置的值，那么就会触发对应的事件，read触发read，write触发write，all触发all。
+    如果超时了，则会调用userEventTriggered方法，且会告诉你超时的类型
+    如果没有超时，则会循环定时检测
 
+    样例如下：
+    ch.pipeline().addLast("idleStateHandler", new IdleStateHandler(readerIdleTimeSeconds, writerIdleTimeSeconds,allIdleTimeSeconds));
+    参数默认为秒， 读空闲，写空闲，读写空闲。
+    [DEMO](http://blog.csdn.net/linuu/article/details/51404264)
+
+9.2 
 ```
 
 
