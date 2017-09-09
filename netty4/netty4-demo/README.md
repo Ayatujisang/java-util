@@ -71,9 +71,15 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
     * HttpHelloWorldServerHandler ： hello world http服务
     * SimpleFileServerHandler ： 简单文件服务器。
         * 返回 DefaultFullHttpResponse， 包含header和content。
+    * content-length 设置： HttpUtil.setContentLength(response, fileLength)
+    * content-type 获取见：ContentTypeTest， 设置：esponse.headers().set(HttpHeaderNames.CONTENT_TYPE, contentType);
+
 
 * http.file   http形式访问本地文件，见 com.kk.netty4.http.file
     * 下载文件服务器
+    * Post请求是分两次收到的，一次是HttpRequest，只有Http 协议头，一次是HttpContent，内容是data form数据。
+    * FullHttpRequest的协议头和Form数据是在一起的，不用分开读，之前分开接收的是DefaultHttpRequest与HttpContent，FullHttpRequest把两者合在一起了。
+    * 返回内容：先返回 DefaultHttpResponse，再返回 HttpChunkedInput 。
 
 ```
 

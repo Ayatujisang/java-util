@@ -75,17 +75,10 @@ public class SimpleFileServerHandler extends SimpleChannelInboundHandler<Default
 
         byte[] bytes = FileUtils.readFileToByteArray(file);
 
-        RandomAccessFile raf;
-        try {
-            raf = new RandomAccessFile(file, "r");
-        } catch (FileNotFoundException ignore) {
-            sendError(ctx, NOT_FOUND);
-            return;
-        }
-        long fileLength = raf.length();
+        long fileLength = bytes.length;
 
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(bytes));
-        HttpUtil.setContentLength(response, fileLength);
+        HttpUtil.setContentLength(response, fileLength); //
 
         setContentTypeHeader(response, file);
 
