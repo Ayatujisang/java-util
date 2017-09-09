@@ -67,6 +67,10 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
 
 * http.helloword  见 com.kk.netty4.http.helloworld
     * netty搭建http服务
+    * http 使用HttpServerCodec编解码，默认解码为：DefaultHttpRequest
+    * HttpHelloWorldServerHandler ： hello world http服务
+    * SimpleFileServerHandler ： 简单文件服务器。
+        * 返回 DefaultFullHttpResponse， 包含header和content。
 
 * http.file   http形式访问本地文件，见 com.kk.netty4.http.file
     * 下载文件服务器
