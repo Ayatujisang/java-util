@@ -65,6 +65,11 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
         * 继承 jdk序列化方式，修改序列化的header和classDescription部分。
         * ObjectEncoder 中先写长度占位符，然后再写自定义对象序列化，然后再设置头部长度占位符长度。
 
+* hessian 对象传输，hessian序列化方式， 见 com.kk.netty4.hessian
+    * HessianEncoder，HessianDecoder
+    * HessianDecoder 继承：LengthFieldBasedFrameDecoder 拆包器。
+    * HessianEncoder 中先写长度占位符，然后再写自定义对象hessian序列化，然后再设置头部长度占位符长度。
+
 * http.helloword  见 com.kk.netty4.http.helloworld
     * netty搭建http服务
     * http 使用HttpServerCodec编解码，默认解码为：DefaultHttpRequest
