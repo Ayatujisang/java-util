@@ -19,6 +19,7 @@ ArrayUtils--Arrays
 CollectionUtils--Collections
 
 SerializationUtils 序列化
+hessian 序列化，见 test/HessianUtil
 
 ### StringEscapeUtils
 * escapeSql 防SQL注入

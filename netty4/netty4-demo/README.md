@@ -240,7 +240,7 @@ childOption()是提供给由父管道ServerChannel接收到的连接，也就是
     参数默认为秒， 读空闲，写空闲，读写空闲。
     [DEMO](http://blog.csdn.net/linuu/article/details/51404264)
 
-9.2 
+9.2
 ```
 
 
