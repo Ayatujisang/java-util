@@ -6,3 +6,6 @@
 * [fork](https://github.com/kongzhidea/NettyRpc)
 
 ### [hrpc](https://github.com/hshenCode/hrpc)
+
+### [Jupiter](https://github.com/fengjiachun/Jupiter)
+* [fork](https://github.com/kongzhidea/Jupiter)
