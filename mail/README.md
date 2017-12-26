@@ -1,3 +1,5 @@
+
+* [python发邮件](https://github.com/kongzhidea/wiki/tree/master/python/mail)
 ```
 如果多个账号：fromAddress 来发送，那么不要用
 Session.getDefaultInstance，  会从缓存中取。
