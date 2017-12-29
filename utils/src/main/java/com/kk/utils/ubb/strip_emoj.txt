@@ -1,147 +1,4 @@
-package com.kk.utils.ubb;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.util.*;
-
-public class Emoj4byte2Char {
-
-    private static Map<Emoj4byte, Character> map = new HashMap<Emoj4byte, Character>();
-
-    public static String convert(String content) {
-        if (content == null) {
-            return content;
-        }
-        List<Byte> byteList = new ArrayList<Byte>();
-        byte[] conbyte = new byte[0];
-        try {
-            conbyte = content.getBytes("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return content;
-        }
-        for (int i = 0; i < conbyte.length; i++) {
-            int deta = 0;
-            if (conbyte[i] == (byte) 0xF0) { // 4位
-                deta = 3;
-            } else if (conbyte[i] == (byte) 0xE2) { //  3位
-                deta = 2;
-            } else if (conbyte[i] == (byte) 0x23) { //  4位  数字
-                deta = 3;
-            } else if (conbyte[i] >= (byte) 0x30 && conbyte[i] <= (byte) 0x39) { //  4位  数字
-                deta = 3;
-            }
-            if (deta > 0) {
-                Emoj4byte ej4 = null;
-
-                if (i + deta < conbyte.length) {
-                    if (deta == 3) {
-                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2], conbyte[i + 3]);
-                    } else {
-                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2]);
-                    }
-                }
-                if (map.get(ej4) != null) {
-                    byte[] l = getBytes(map.get(ej4));
-                    byteList.addAll(array2list(l));
-                    i += deta;
-                } else {
-                    byteList.add(conbyte[i]);
-                }
-            } else {
-                byteList.add(conbyte[i]);
-            }
-        }
-        byte[] ret = list2array(byteList);
-        return new String(ret);
-    }
-
-    // 删除4字节 emoj表情
-    public static String stripEmoj(String content) {
-        if (content == null) {
-            return content;
-        }
-        List<Byte> byteList = new ArrayList<Byte>();
-        byte[] conbyte = new byte[0];
-        try {
-            conbyte = content.getBytes("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return content;
-        }
-        for (int i = 0; i < conbyte.length; i++) {
-            int deta = 0;
-            if (conbyte[i] == (byte) 0xF0) { // 4位
-                deta = 3;
-            } else if (conbyte[i] == (byte) 0xE2) { //  3位
-                deta = 2;
-            } else if (conbyte[i] == (byte) 0x23) { //  4位  数字
-                deta = 3;
-            } else if (conbyte[i] >= (byte) 0x30 && conbyte[i] <= (byte) 0x39) { //  4位  数字
-                deta = 3;
-            }
-            if (deta > 0) {
-                Emoj4byte ej4 = null;
-
-                if (i + deta < conbyte.length) {
-                    if (deta == 3) {
-                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2], conbyte[i + 3]);
-                    } else {
-                        ej4 = new Emoj4byte(conbyte[i], conbyte[i + 1], conbyte[i + 2]);
-                    }
-                }
-                if (map.get(ej4) != null) {
-                    byte[] l = getBytes(map.get(ej4));
-//                    byteList.addAll(array2list(l));
-                    i += deta;
-                } else {
-                    byteList.add(conbyte[i]);
-                }
-            } else {
-                byteList.add(conbyte[i]);
-            }
-        }
-        byte[] ret = list2array(byteList);
-        return new String(ret);
-    }
-
-    private static Character convert(byte[] bytes) {
-        return map.get(new Emoj4byte(bytes));
-    }
-
-    private static List<Byte> array2list(byte[] bytes) {
-        List<Byte> list = new ArrayList<Byte>();
-        for (int i = 0; i < bytes.length; i++) {
-            list.add(bytes[i]);
-        }
-        return list;
-    }
-
-    private static byte[] list2array(List<Byte> list) {
-        byte[] ret = new byte[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            ret[i] = list.get(i);
-        }
-        return ret;
-    }
-
-    private static byte[] getBytes(char ch) {
-        char[] chars = new char[]{ch};
-        Charset cs = Charset.forName("UTF-8");
-        CharBuffer cb = CharBuffer.allocate(chars.length);
-        cb.put(chars);
-        cb.flip();
-        ByteBuffer bb = cs.encode(cb);
-
-        return bb.array();
-
-    }
-
-
-    static {
-        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x84), (char) 0xE415);
+	map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x84), (char) 0xE415);
         map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x8A), (char) 0xE056);
         map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x83), (char) 0xE057);
         map.put(new Emoj4byte((byte) 0xE2, (byte) 0x98, (byte) 0xBA), (char) 0xE414);
@@ -409,7 +266,7 @@ public class Emoj4byte2Char {
         map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8E, (byte) 0xB1), (char) 0xE42C);
         map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0x8A), (char) 0xE42D);
         map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0x84), (char) 0xE017);
-        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8E, (byte) 0xBF), (char) 0xE013);//
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8E, (byte) 0xBF), (char) 0xE013);
 
 
         map.put(new Emoj4byte((byte) 0xE2, (byte) 0x99, (byte) 0xA0), (char) 0xE20E);
@@ -678,42 +535,82 @@ public class Emoj4byte2Char {
 
 
         map.put(new Emoj4byte((byte) 0xE2, (byte) 0x84, (byte) 0xA2), (char) 0xE537);
-    }
 
-
-    static class Emoj4byte {
-        private byte[] bytes;
-
-        public Emoj4byte() {
-        }
-
-        public Emoj4byte(byte... b) {
-            this.bytes = b;
-        }
-
-
-        public byte[] getBytes() {
-            return bytes;
-        }
-
-        public void setBytes(byte[] bytes) {
-            this.bytes = bytes;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Emoj4byte b4 = (Emoj4byte) o;
-
-            return Arrays.equals(bytes, b4.bytes);
-
-        }
-
-        @Override
-        public int hashCode() {
-            return bytes != null ? Arrays.hashCode(bytes) : 0;
-        }
-    }
-}
+        // 找不到对应的emoj
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x97), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x96), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x95), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x94), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x93), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x92), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0x91), (char) 0xE02E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x84), (char) 0xE423);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xAC), (char) 0xE40E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xAF), (char) 0xE40E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xAE), (char) 0xE40E);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x95), (char) 0xE417);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x88), (char) 0xE424);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xB4), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x85), (char) 0xE415);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x86), (char) 0xE415);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x87), (char) 0xE415);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0xBB), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x92), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x95), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x93, (byte) 0xA5), (char) 0xE00B);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0xBC), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0xBD), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x82), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x83), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x81), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x8B), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x91), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x90), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8E, (byte) 0xB2), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x92, (byte) 0xAF), (char) 0xE427);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x90, (byte) 0x8C), (char) 0xE52D);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x90, (byte) 0x8A), (char) 0xE52D);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x90, (byte) 0x8B), (char) 0xE52D);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x90, (byte) 0x8F), (char) 0xE52D);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x90), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x91), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x93), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x96, (byte) 0x94), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8F, (byte) 0xBF), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA6, (byte) 0x84), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xA9), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x93, (byte) 0xA6), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0xA5, (byte) 0x96, (byte) 0x84), (char) 0xE506);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xAB), (char) 0xE401);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xB5), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x89), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x80), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x8A), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x8D), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8D, (byte) 0x92), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x91, (byte) 0x8C), (char) 0xE40F);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x8B), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x9A, (byte) 0xA8), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x99, (byte) 0x8F), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x92, (byte) 0x95), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8D, (byte) 0x97), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xA4), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x92, (byte) 0xB2), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x92, (byte) 0xB3), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x92, (byte) 0xB6), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8C, (byte) 0x9D), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8C, (byte) 0x9E), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0xB7), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8D, (byte) 0xA4), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8D, (byte) 0x8B), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x87, (byte) 0xAA), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x87, (byte) 0xB3), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0xA4, (byte) 0xA3), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x8E), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x9F), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0xB6), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8C, (byte) 0x9A), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x87, (byte) 0xA8), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x90, (byte) 0x9D), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x94, (byte) 0x9F), (char) 0xE402);
+        map.put(new Emoj4byte((byte) 0xF0, (byte) 0x9F, (byte) 0x8C, (byte) 0xB8), (char) 0xE402);
