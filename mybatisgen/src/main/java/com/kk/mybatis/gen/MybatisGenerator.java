@@ -9,9 +9,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-/**
- * mapper中 sql.id 需要去掉第一个逗号
- */
 public class MybatisGenerator {
     public static final String SPTJ = "#";
 
