@@ -7,7 +7,8 @@ import java.util.Date;
 /**
  * 
  * 打印model对象的各个字段信息使用的工具类，功能类似于JSONSerializer.toJSON(model)
- * 
+ * 同：import org.apache.commons.lang.builder.ToStringBuilder;
+ * ToStringBuilder.reflectionToString(new Example()) 
  * 
  */
 
