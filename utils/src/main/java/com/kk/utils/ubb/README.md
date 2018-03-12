@@ -11,7 +11,7 @@ content中 包含4字节字符，无法识别，导致插入数据库失败。
 
 correct string value: '\xF0\x9F\x98\x84\xE5\x93...'
 
-
+MAC 电脑上可以通过ctrl+command+space 打出emoj表情。
 ```
 
 ```
