@@ -38,6 +38,8 @@ mysql 支持emoj字符：
 https://www.liaoxuefeng.com/article/00145803336427519ae82a6c5b5474682c0c4ba5b47fb33000
 
 如果使用MySQL作为数据库，需要升级到5.5.3或更新的版本，然后，把默认编码从原来的utf8改为utf8mb4，在my.cnf或者my.ini配置文件中修改如下：
+如果是java应用自身管理mysql连接，那么mysql connector版本高于5.1.13，
+
 
 [client]
 default-character-set = utf8mb4
@@ -45,4 +47,20 @@ default-character-set = utf8mb4
 [mysqld]
 character-set-server = utf8mb4
 collation-server     = utf8mb4_general_ci
+```
+
+``
+参数样例：
+
+show variables like '%char%'
+
+character_set_client=utf8mb4
+character_set_connection=utf8mb4
+character_set_server=utf8mb4
+
+
+show variables like '%coll%'
+collation_connection=utf8mb4_general_ci
+collation_database=utf8_general_ci
+collation_server=utf8mb4_general_ci
 ```
