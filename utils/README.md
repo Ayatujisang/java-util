@@ -1,6 +1,7 @@
 
 #### java 常见util类
 * 详见：src/main/java/com/kk/utils/README.md
+* 反射推荐使用：[reflections](https://github.com/kongzhidea/reflections)
 
 ```
 第三方jar包安装：
