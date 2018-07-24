@@ -60,7 +60,7 @@ public class DateUtil {
 	}
 
     /**
-	 * yyyy-MM-dd HH:mm:ss
+	 * yyyy-MM
 	 *
 	 * @param date
 	 * @return
