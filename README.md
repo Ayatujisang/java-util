@@ -1,6 +1,10 @@
 # java-util
+
 ## 一些常见的方法
-###apache-common 包中常见util
+* 【强制】避免用Apache Beanutils进行属性的copy，性能比较差。
+* 说明：Apache BeanUtils性能较差，可以使用其他方案比如Spring BeanUtils, Cglib BeanCopier，注意均是浅拷贝。
+
+### apache-common 包中常见util
     * IOUtils
     * StringUtils
     * RandomStringUtils
@@ -15,7 +19,7 @@
 
 
 
-#####以下列表是通过分析50K的开源项目得出来的。
+##### 以下列表是通过分析50K的开源项目得出来的。
 
 ### 1.org.apache.commons.io.IOUtils
     * closeQuietly ( )
