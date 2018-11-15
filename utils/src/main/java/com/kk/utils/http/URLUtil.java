@@ -41,7 +41,7 @@ public class URLUtil {
 
 
     /**
-     * 将参数Map转化为Url的字符串形式
+     * 将参数Map转化为Url的字符串形式，推荐使用：org.apache.http.client.utils.URIBuilder
      *
      * @param paramMap key为字符串，value为字符串或字符串数组
      * @return
