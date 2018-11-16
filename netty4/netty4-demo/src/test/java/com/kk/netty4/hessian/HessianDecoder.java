@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-
+import io.netty.util.ReferenceCountUtil;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
@@ -55,6 +55,7 @@ public class HessianDecoder  extends LengthFieldBasedFrameDecoder {
 
         } finally {
             try {
+                ReferenceCountUtil.release(frame);
                 if (input != null) {
                     input.close();
                 }
