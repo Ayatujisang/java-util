@@ -31,6 +31,9 @@ remark = EmojiReplacer.replaceEmoji(remark);
 
 
 Emoj4byte2Char  目前没有枚举到所有的情况，后续 遇到新的再补充就行。
+
+替换emoj，待验证：
+source.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", slipStr); 
 ```
 
 ```
